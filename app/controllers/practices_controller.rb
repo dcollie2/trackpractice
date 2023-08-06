@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
 
   # GET /practices or /practices.json
   def index
-    @practices = Practice.all.order(practice_date: :desc)
+    @practices = current_user.practices.order(practice_date: :desc)
   end
 
   # GET /practices/1 or /practices/1.json
@@ -13,7 +13,7 @@ class PracticesController < ApplicationController
 
   # GET /practices/new
   def new
-    @practice = Practice.new
+    @practice = Practice.new(user: current_user)
   end
 
   # GET /practices/1/edit
@@ -22,11 +22,11 @@ class PracticesController < ApplicationController
 
   # POST /practices or /practices.json
   def create
-    @practice = Practice.new(practice_params)
+    @practice = current_user.practices.new(practice_params)
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to practice_url(@practice), notice: "Practice was successfully created." }
+        format.html { redirect_to practices_url, notice: "Practice was successfully created." }
         format.json { render :show, status: :created, location: @practice }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -61,11 +61,11 @@ class PracticesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_practice
-      @practice = Practice.find(params[:id])
+      @practice = current_user.practices.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def practice_params
-      params.require(:practice).permit(:practice_date, :minutes, :notes)
+      params.require(:practice).permit(:practice_date, :minutes, :notes, :user_id)
     end
 end
