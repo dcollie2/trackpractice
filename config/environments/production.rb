@@ -63,7 +63,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "trackpractice_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'trackpractice.fly.dev' }
+  config.action_mailer.default_url_options = { host: 'trackpractice.fly.dev', port: 587 }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -92,7 +92,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  ActionMailer::Base.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
     :password => ENV["SENDGRID_API_KEY"], # This is the secret sendgrid API key which was issued during API key creation
     :domain => 'trackpractice.fly.dev',
@@ -102,4 +102,6 @@ Rails.application.configure do
     :enable_starttls_auto => true
   }
 
+  config.action_mailer.delivery_method = :smtp
+  
 end
