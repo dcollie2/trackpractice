@@ -8,8 +8,11 @@ class PagesController < ApplicationController
   end
 
   def home
-    redirect_to practices_url if user_signed_in?
-    render 'pages/home'
+    if user_signed_in?
+      redirect_to practices_url
+    else
+      render 'pages/home'
+    end
   end
 
   # GET /pages/1 or /pages/1.json
