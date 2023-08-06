@@ -1,0 +1,6 @@
+<tr id="<%= dom_id practice %>">
+  <td><%= practice.practice_date %></td>
+  <td><%= practice.minutes %></td>
+  <td><%= practice.notes %></td>
+  <td><%= link_to "Show this practice", practice %> <%= link_to "Edit this practice", edit_practice_path(practice) %> <%= button_to "Destroy this practice", practice, method: :delete %></td>
+</tr>

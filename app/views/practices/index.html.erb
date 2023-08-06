@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Practices</h1>
+<p>Total practice time: <%= '%d hours and %02d minutes' % @practices.sum(:minutes).divmod(60) %></p>
+<%= link_to "New practice", new_practice_path %>
+<div id="practices">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Minutes</th>
+      <th scope="col">Notes</th>
+      <th scope="col">Tools</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= render @practices %>
+    </tbody>
+  </table>
+</div>
