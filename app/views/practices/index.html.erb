@@ -1,6 +1,8 @@
 <h1>Practices</h1>
 <p>Total practice time: <%= '%d hours and %02d minutes' % @practices.sum(:minutes).divmod(60) %></p>
-<p><%= link_to "New practice", new_practice_path %></p>
+<p><%= link_to "New practice", new_practice_path, data: { turbo_frame: "new_practice" } %></p>
 
-  <%= render @practices %>
+<%= turbo_frame_tag "new_practice", target: "_top" %>
+
+<%= render @practices %>
 

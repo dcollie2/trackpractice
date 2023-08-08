@@ -1,0 +1,3 @@
+<%= turbo_stream.prepend "practices", @practice %>
+<%= turbo_stream.update Practice.new, "" %>
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %>

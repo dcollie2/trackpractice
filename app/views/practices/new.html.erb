@@ -1,9 +1,3 @@
-<h1>New practice</h1>
-
-<%= render "form", practice: @practice %>
-
-<br>
-
-<div>
+<%= turbo_frame_tag @practice do %>
   <%= link_to "Back to practices", practices_path %>
-</div>
+<% end %>
