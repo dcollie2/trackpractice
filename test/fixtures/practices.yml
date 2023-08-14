@@ -11,3 +11,10 @@ two:
   minutes: 1
   notes: MyText
   user: testy
+
+not_testy:
+  practice_date: 2023-08-05 12:38:17
+  minutes: 1
+  notes: MyText
+  user: another_user
+

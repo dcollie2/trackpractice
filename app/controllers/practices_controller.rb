@@ -27,8 +27,7 @@ class PracticesController < ApplicationController
     respond_to do |format|
       if @practice.save
         format.html { redirect_to practices_url, notice: "Practice was successfully created." }
-        format.json { render :show, status: :created, location: @practice }
-        format.turbo_stream { flash.now[:notice] = "Practice was successfully created." }
+        # format.turbo_stream { flash.now[:notice] = "Practice was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @practice.errors, status: :unprocessable_entity }
