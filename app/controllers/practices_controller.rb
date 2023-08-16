@@ -13,7 +13,7 @@ class PracticesController < ApplicationController
 
   # GET /practices/new
   def new
-    @practice = Practice.new(user: current_user)
+    @practice = Practice.new(user: current_user, practice_date: Date.today)
   end
 
   # GET /practices/1/edit
