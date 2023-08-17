@@ -1,15 +1,4 @@
 <%= form_with(model: @practice) do |form| %>
-  <div id="stopwatch">
-    <div class="timerDisplay">
-      00 : 00 : 00 : 000
-    </div>
-    <div class=”buttons”>
-      <button id=”pauseTimer”>Pause</button>
-      <button id=”startTimer”>Start</button>
-      <button id=”resetTimer”>Reset</button>
-    </div>
-  </div>
-
   <div class='card w-50'>
     <div class="card-body">
       <!-- Profile picture and short information -->
@@ -29,6 +18,16 @@
         <!--    <img class="img-md rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile Picture" loading="lazy">-->
         <!--  </div>-->
         <div class="flex-grow-1">
+          <div id="stopwatch">
+            <div class="timerDisplay text-center">
+              00 : 00 : 00 : 000
+            </div>
+            <div class=”buttons”>
+              <button id=”pauseTimer” class="btn btn-success"><i class="bi bi-pause-circle"></i> Pause</button>
+              <button id=”startTimer” class="btn btn-primary"><i class="bi bi-play-circle-fill"></i> Start</button>
+              <button id=”resetTimer” class="btn btn-danger"><i class="bi bi-x-circle"></i> Reset</button>
+            </div>
+          </div>
 
           <%= form.label :minutes, class: "form-label" %>
           <%= form.number_field :minutes, class: 'form-control' %>
