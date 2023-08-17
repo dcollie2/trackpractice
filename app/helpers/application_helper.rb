@@ -1,6 +1,11 @@
 module ApplicationHelper
-  def practice_date(date)
-    date.to_fs(:long)
+  def practice_date(date, show_time=true)
+    if show_time
+      date.to_fs(:long)
+    else
+      # date with no time in format january 1, 2021
+      date.strftime("%B %e, %Y")
+    end
   end
 
   def minutes_in_words(span)

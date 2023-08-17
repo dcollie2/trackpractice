@@ -10,5 +10,7 @@ class Practice < ApplicationRecord
   scope :this_week_grouped, -> { this_week.group("DATE(practice_date)").sum(:minutes) }
   # get total sum of minutes for this week
   scope :this_week_total, -> { this_week.sum(:minutes) }
+  # get earliest practice_date
+  scope :first_practice_date, -> { order(:practice_date).first.practice_date }
 
 end

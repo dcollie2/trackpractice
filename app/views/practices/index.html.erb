@@ -1,6 +1,6 @@
 <h1>Practices</h1>
-<p>Total practice time: <%= '%d hours and %02d minutes' % @practices.sum(:minutes).divmod(60) %></p>
-<h2>In the past 7 days, you've practiced:
+<p>You've practiced <%= '%d hours and %02d minutes' % @practices.sum(:minutes).divmod(60) %> since <%= practice_date(current_user.practices.first_practice_date, false) %></p>
+<h2>In the past 7 days, you've practiced
   <span class="badge bg-success">
     <%= current_user.practices.this_week_grouped.count %> Days
   </span> totaling
