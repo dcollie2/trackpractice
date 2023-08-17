@@ -1,5 +1,14 @@
 <h1>Practices</h1>
 <p>Total practice time: <%= '%d hours and %02d minutes' % @practices.sum(:minutes).divmod(60) %></p>
+<h2>In the past 7 days, you've practiced:
+  <span class="badge bg-success">
+    <%= current_user.practices.this_week_grouped.count %> Days
+  </span> totaling
+  <span class="badge bg-success">
+    <%= minutes_in_words(current_user.practices.this_week_total) %>
+  </span>
+</h2>
+
 <p><%= link_to "New practice", new_practice_path, data: { turbo_frame: "new_practice" } %></p>
 
 <%= turbo_frame_tag "new_practice", target: "_top" %>
