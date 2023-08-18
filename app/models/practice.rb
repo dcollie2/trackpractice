@@ -13,4 +13,8 @@ class Practice < ApplicationRecord
   # get earliest practice_date
   scope :first_practice_date, -> { order(:practice_date).first.practice_date }
 
+  def show_timer?
+    new_record?
+  end
+
 end

@@ -18,7 +18,7 @@
         <!--    <img class="img-md rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile Picture" loading="lazy">-->
         <!--  </div>-->
         <div class="flex-grow-1">
-          <% if @practice.new_record? %>
+          <% if @practice.show_timer? %>
             <div id="stopwatch">
               <div class="timerDisplay text-center">
                 00 : <%= @practice.minutes.to_s.rjust(2, '0') %> : 00 : 000
@@ -49,46 +49,48 @@
       <!-- END : Options buttons -->
     </div>
   </div>
-<script type='application/javascript'>
-    let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
-    let timerRef = document.querySelector('.timerDisplay');
-    let int = null;
-    let minutesRef = document.getElementById('practice_minutes');
-    document.getElementById('startTimer').addEventListener('click', ()=>{
-        if(int!==null){
-            clearInterval(int);
-        }
-        int = setInterval(displayTimer,10);
-    });
-    document.getElementById('pauseTimer').addEventListener('click', ()=>{
-        clearInterval(int);
-    });
-    document.getElementById('resetTimer').addEventListener('click', ()=>{
-        clearInterval(int);
-        [milliseconds,seconds,minutes,hours] = [0,0,0,0];
-        timerRef.innerHTML = '00 : 00 : 00 : 000 ';
-    });
-    function displayTimer(){
-        milliseconds+=10;
-        if(milliseconds == 1000){
-            milliseconds = 0;
-            seconds++;
-            if(seconds == 60){
-                seconds = 0;
-                minutes++;
-                if(minutes == 60){
-                    minutes = 0;
-                    hours++;
-                }
-            }
-        }
-        let h = hours < 10 ? "0" + hours : hours;
-        let m = minutes < 10 ? "0" + minutes : minutes;
-        let s = seconds < 10 ? "0" + seconds : seconds;
-        let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
-        timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
-        minutesRef.value = minutes;
-    }
-</script>
 
+  <% if @practice.show_timer? %>
+    <script type='application/javascript'>
+      let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
+      let timerRef = document.querySelector('.timerDisplay');
+      let int = null;
+      let minutesRef = document.getElementById('practice_minutes');
+      document.getElementById('startTimer').addEventListener('click', ()=>{
+          if(int!==null){
+              clearInterval(int);
+          }
+          int = setInterval(displayTimer,10);
+      });
+      document.getElementById('pauseTimer').addEventListener('click', ()=>{
+          clearInterval(int);
+      });
+      document.getElementById('resetTimer').addEventListener('click', ()=>{
+          clearInterval(int);
+          [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+          timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+      });
+      function displayTimer(){
+          milliseconds+=10;
+          if(milliseconds == 1000){
+              milliseconds = 0;
+              seconds++;
+              if(seconds == 60){
+                  seconds = 0;
+                  minutes++;
+                  if(minutes == 60){
+                      minutes = 0;
+                      hours++;
+                  }
+              }
+          }
+          let h = hours < 10 ? "0" + hours : hours;
+          let m = minutes < 10 ? "0" + minutes : minutes;
+          let s = seconds < 10 ? "0" + seconds : seconds;
+          let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+          timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+          minutesRef.value = minutes;
+      }
+    </script>
+  <% end %>
 <% end %>
