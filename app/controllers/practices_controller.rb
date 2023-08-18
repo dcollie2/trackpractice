@@ -38,7 +38,7 @@ class PracticesController < ApplicationController
   def update
     respond_to do |format|
       if @practice.update(practice_params)
-        format.html { redirect_to practices, notice: "Practice was successfully updated." }
+        format.html { redirect_to practices_url, notice: "Practice was successfully updated." }
         format.json { render :show, status: :ok, location: @practice }
       else
         format.html { render :edit, status: :unprocessable_entity }
