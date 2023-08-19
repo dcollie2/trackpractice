@@ -1,0 +1,26 @@
+<%= form_with(model: focus) do |form| %>
+  <% if focus.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(focus.errors.count, "error") %> prohibited this focus from being saved:</h2>
+
+      <ul>
+        <% focus.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :short_description, style: "display: block" %>
+    <%= form.text_field :short_description %>
+  </div>
+
+  <div>
+    User: <%= @focus.user.email %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
