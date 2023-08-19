@@ -1,0 +1,11 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Foci</h1>
+
+<p><%= link_to "New focus", new_focus_path, data: { turbo_frame: "new_focus" } %></p>
+
+<%= turbo_frame_tag "new_focus", target: "_top" %>
+
+<%= render @foci %>
+
+

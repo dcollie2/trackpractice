@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @focus %>
+
+<div>
+  <%= link_to "Edit this focus", edit_focus_path(@focus) %> |
+  <%= link_to "Back to foci", foci_path %>
+
+  <%= button_to "Destroy this focus", @focus, method: :delete %>
+</div>

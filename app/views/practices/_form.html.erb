@@ -3,45 +3,22 @@
     <div class="card-body">
       <!-- Profile picture and short information -->
       <div class="d-flex align-items-center position-relative pb-3">
-        <%# if practice.errors.any? %>
-        <!--    <div style="color: red">-->
-        <!--      <h2><%#= pluralize(practice.errors.count, "error") %> prohibited this practice from being saved:</h2>-->
-
-        <!--      <ul>-->
-        <%# practice.errors.each do |error| %>
-        <!--          <li><%#= error.full_message %></li>-->
-        <%# end %>
-        <!--      </ul>-->
-        <!--    </div>-->
-        <%# end %>
-        <!--  <div class="flex-shrink-0">-->
-        <!--    <img class="img-md rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile Picture" loading="lazy">-->
-        <!--  </div>-->
         <div class="flex-grow-1">
-          <% if @practice.show_timer? %>
-
-            <div id="timerContainer">
-              <div class="timer text-center" onclick="startTimer()">Start Practicing!</div>
-              <div class="startTimer reset btn btn-primary" onclick="startTimer()" >
-                <i class="bi bi-play-circle-fill"></i>
+          <% if @practice.new_record? %>
+            <div id="stopwatch">
+              <div class="timerDisplay text-center">
+                00 : <%= @practice.minutes.to_s.rjust(2, '0') %> : 00 : 000
               </div>
-              <div class="pauseTimer reset btn btn-success" onclick="pauseTimer()" aria-description="pause timer" >
-                <i class="bi bi-pause-circle"></i>
+              <div class="buttons text-center">
+                <button id="pauseTimer" class="btn btn-success" type="button"><i class="bi bi-pause-circle"></i> Pause</button>
+                <button id="startTimer" class="btn btn-primary" type="button"><i class="bi bi-play-circle-fill"></i> Start</button>
+                <button id="resetTimer" class="btn btn-danger" type="button"><i class="bi bi-x-circle"></i> Reset</button>
               </div>
-              <div class="resetTimer reset btn btn-danger" onclick="resetTimer()"><i class="bi bi-x-circle"></i> Reset</div>
             </div>
-
-<!--            <div id="stopwatch">-->
-<!--              <div class="timer text-center">-->
-<!--                00 : <%#= @practice.minutes.to_s.rjust(2, '0') %> : 00 : 000-->
-<!--              </div>-->
-<!--              <div class="buttons text-center">-->
-<!--                <button class="btn btn-success pauseTimer" type="button"><i class="bi bi-pause-circle"></i> Pause</button>-->
-<!--                <button class="btn btn-primary startTimer" type="button"><i class="bi bi-play-circle-fill"></i> Start</button>-->
-<!--                <button class="btn btn-danger resetTimer" type="button"><i class="bi bi-x-circle"></i> Reset</button>-->
-<!--              </div>-->
-<!--            </div>-->
           <% end %>
+
+          <%= form.label :focus_id, class: 'form-label' %>
+          <%= form.select :focus_id, current_user.foci.map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, class: "form-control" if current_user.foci.present? %>
           <%= form.label :minutes, class: "form-label" %>
           <%= form.number_field :minutes, class: 'form-control' %>
           <%= form.label :practice_date, class: 'form-label' %>
@@ -62,93 +39,48 @@
     </div>
   </div>
 
-  <% if @practice.show_timer? %>
+  <% if @practice.new_record? %>
     <script type='application/javascript'>
-        var startTimerButton = document.querySelector('.startTimer');
-        var pauseTimerButton = document.querySelector('.pauseTimer');
-        var timerDisplay = document.querySelector('.timer');
-        var startTime;
-        var updatedTime;
-        var difference;
-        var tInterval;
-        var savedTime;
-        var paused = 0;
-        var running = 0;
-        var minutesRef = document.getElementById('practice_minutes');
-
-
-        function startTimer(){
-            if(!running){
-                startTime = new Date().getTime();
-                tInterval = setInterval(getShowTime, 1);
-                paused = 0;
-                running = 1;
-                timerDisplay.style.background = "#FF0000";
-                timerDisplay.style.cursor = "auto";
-                timerDisplay.style.color = "yellow";
-                startTimerButton.classList.add('lighter');
-                pauseTimerButton.classList.remove('lighter');
-                startTimerButton.style.cursor = "auto";
-                pauseTimerButton.style.cursor = "pointer";
-            }
-        }
-
-        function pauseTimer(){
-            if (!difference){
-                // if timer never started, don't allow pause button to do anything
-            } else if (!paused) {
-                clearInterval(tInterval);
-                savedTime = difference;
-                paused = 1;
-                running = 0;
-                timerDisplay.style.background = "#A90000";
-                timerDisplay.style.color = "#690000";
-                timerDisplay.style.cursor = "pointer";
-                startTimerButton.classList.remove('lighter');
-                pauseTimerButton.classList.add('lighter');
-                startTimerButton.style.cursor = "pointer";
-                pauseTimerButton.style.cursor = "auto";
-            } else {
-                startTimer();
-            }
-        }
-
-        function resetTimer(){
-            clearInterval(tInterval);
-            savedTime = 0;
-            difference = 0;
-            paused = 0;
-            running = 0;
-            timerDisplay.innerHTML = 'Start Studying!';
-            timerDisplay.style.background = "#A90000";
-            timerDisplay.style.color = "#fff";
-            timerDisplay.style.cursor = "pointer";
-            startTimerButton.classList.remove('lighter');
-            pauseTimerButton.classList.remove('lighter');
-            startTimerButton.style.cursor = "pointer";
-            pauseTimerButton.style.cursor = "auto";
-        }
-
-        function getShowTime(){
-            updatedTime = new Date().getTime();
-            if (savedTime){
-                difference = (updatedTime - startTime) + savedTime;
-            } else {
-                difference =  updatedTime - startTime;
-            }
-            // var days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((difference % (1000 * 60)) / 1000);
-            var milliseconds = Math.floor((difference % (1000 * 60)) / 100);
-
-            hours = (hours < 10) ? "0" + hours : hours;
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            seconds = (seconds < 10) ? "0" + seconds : seconds;
-            milliseconds = (milliseconds < 100) ? (milliseconds < 10) ? "00" + milliseconds : "0" + milliseconds : milliseconds;
-            timerDisplay.innerHTML = hours + ':' + minutes + ':' + seconds + ':' + milliseconds;
-            minutesRef.value = minutes;
-        }
+      let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
+      let timerRef = document.querySelector('.timerDisplay');
+      let int = null;
+      let minutesRef = document.getElementById('practice_minutes');
+      document.getElementById('startTimer').addEventListener('click', ()=>{
+          if(int!==null){
+              clearInterval(int);
+          }
+          int = setInterval(displayTimer,10);
+      });
+      document.getElementById('pauseTimer').addEventListener('click', ()=>{
+          clearInterval(int);
+      });
+      document.getElementById('resetTimer').addEventListener('click', ()=>{
+          clearInterval(int);
+          [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+          timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+          minutesRef.value = 0;
+      });
+      function displayTimer(){
+          milliseconds+=10;
+          if(milliseconds == 1000){
+              milliseconds = 0;
+              seconds++;
+              if(seconds == 60){
+                  seconds = 0;
+                  minutes++;
+                  minutesRef.value++;
+                  if(minutes == 60){
+                      minutes = 0;
+                      hours++;
+                  }
+              }
+          }
+          let h = hours < 10 ? "0" + hours : hours;
+          let m = minutes < 10 ? "0" + minutes : minutes;
+          let s = seconds < 10 ? "0" + seconds : seconds;
+          let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+          timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+      }
     </script>
   <% end %>
 <% end %>

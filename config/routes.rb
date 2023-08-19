@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :foci
   resources :pages
   devise_for :users
   resources :practices

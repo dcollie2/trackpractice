@@ -10,6 +10,7 @@
         <p class="text-muted m-0"><%= practice_date(practice.practice_date) %></p>
       </div>
     </div>
+    <%= content_tag :h2, practice.focus.short_description if practice.focus.present? %>
     <p><%= practice.notes %></p>
     <!-- END : Profile picture and short information -->
 

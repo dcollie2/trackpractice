@@ -6,5 +6,5 @@ class User < ApplicationRecord
          :trackable, :confirmable, :lockable
 
   has_many :practices
-
+  has_many :foci
 end
