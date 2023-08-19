@@ -1,9 +1,3 @@
-<h1>New focus</h1>
-
-<%= render "form", focus: @focus %>
-
-<br>
-
-<div>
-  <%= link_to "Back to foci", foci_path %>
-</div>
+<%= turbo_frame_tag @focus do %>
+  <%= render "form", focus: @focus %>
+<% end %>>

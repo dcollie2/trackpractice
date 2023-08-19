@@ -17,8 +17,10 @@
             </div>
           <% end %>
 
-          <%= form.label :focus_id, class: 'form-label' %>
-          <%= form.select :focus_id, current_user.foci.map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, class: "form-control" if current_user.foci.present? %>
+          <% if current_user.foci.present? %>
+            <%= form.label :focus_id, class: 'form-label' %>
+            <%= form.select :focus_id, current_user.foci.map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, class: "form-control" %>
+          <% end %>
           <%= form.label :minutes, class: "form-label" %>
           <%= form.number_field :minutes, class: 'form-control' %>
           <%= form.label :practice_date, class: 'form-label' %>
