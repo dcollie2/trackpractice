@@ -1,0 +1,20 @@
+<h1>Users</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td scope='col'>Email</td>
+      <td scope='col'>Practices</td>
+      <td scope='col'>Created</td>
+      <td scope='col'>Confirmed</td>
+      <% if current_user.admin? %>
+        <td scope='col'>Admin</td>
+        <td></td>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @users %>
+  </tbody>
+
+</table>
