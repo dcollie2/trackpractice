@@ -10,7 +10,18 @@ module ApplicationHelper
 
   def minutes_in_words(span)
     span = 0 if span.blank?
-    distance_of_time_in_words(DateTime.now, DateTime.now + span.minutes)
+    if span == 0
+      '0'
+    else
+      distance_of_time_in_words(DateTime.now, DateTime.now + span.minutes)
+    end
   end
 
+  def active_state(controller)
+    if params[:controller] == controller
+      "active"
+    else
+      ""
+    end
+  end
 end
