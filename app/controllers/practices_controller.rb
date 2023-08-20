@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_action :set_practice, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: :index
-
+  before_action :authenticate_user!
+  
   # GET /practices or /practices.json
   def index
     @practices = current_user.practices.order(practice_date: :desc)
