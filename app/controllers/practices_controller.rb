@@ -1,10 +1,10 @@
 class PracticesController < ApplicationController
   before_action :set_practice, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  
+
   # GET /practices or /practices.json
   def index
-    @practices = current_user.practices.order(practice_date: :desc)
+    @practices = current_user.practices.this_week.order(practice_date: :desc)
   end
 
   # GET /practices/1 or /practices/1.json
@@ -13,7 +13,7 @@ class PracticesController < ApplicationController
 
   # GET /practices/new
   def new
-    @practice = Practice.new(user: current_user, practice_date: DateTime.now())
+    @practice = Practice.new(user: current_user, practice_date: DateTime.current)
   end
 
   # GET /practices/1/edit

@@ -13,7 +13,7 @@ module ApplicationHelper
     if span == 0
       '0'
     else
-      distance_of_time_in_words(DateTime.now, DateTime.now + span.minutes)
+      distance_of_time_in_words(DateTime.current, DateTime.current + span.minutes)
     end
   end
 
