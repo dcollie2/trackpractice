@@ -5,13 +5,13 @@
       <div class="d-flex align-items-center position-relative pb-3">
         <div class="flex-grow-1">
           <% if @practice.new_record? %>
-            <div id="stopwatch">
-              <div class="timerDisplay text-center">
+            <div id="stopwatch" class="bg-primary rounded">
+              <div class="timerDisplay text-light bg-dark p-2 rounded text-monospace fs-1">
                 00 : <%= @practice.minutes.to_s.rjust(2, '0') %> : 00 : 000
               </div>
-              <div class="buttons text-center">
-                <button id="pauseTimer" class="btn btn-success" type="button"><i class="bi bi-pause-circle"></i> Pause</button>
-                <button id="startTimer" class="btn btn-primary" type="button"><i class="bi bi-play-circle-fill"></i> Start</button>
+              <div class="buttons text-center p-1 bg-secondary">
+                <button id="pauseTimer" class="btn btn-success me-2" type="button"><i class="bi bi-pause-circle"></i> Pause</button>
+                <button id="startTimer" class="btn btn-primary me-2" type="button"><i class="bi bi-play-circle-fill"></i> Start</button>
                 <button id="resetTimer" class="btn btn-danger" type="button"><i class="bi bi-x-circle"></i> Reset</button>
               </div>
             </div>
@@ -43,6 +43,9 @@
 
   <% if @practice.new_record? %>
     <script type='application/javascript'>
+      let start = Date.now();
+      let end = Date.now();
+
       let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
       let timerRef = document.querySelector('.timerDisplay');
       let int = null;
@@ -62,26 +65,24 @@
           timerRef.innerHTML = '00 : 00 : 00 : 000 ';
           minutesRef.value = 0;
       });
+
+      // calculate time elapsed since start's time. Return in minutes and set hours, minutes, seconds, and milliseconds
       function displayTimer(){
-          milliseconds+=10;
-          if(milliseconds == 1000){
-              milliseconds = 0;
-              seconds++;
-              if(seconds == 60){
-                  seconds = 0;
-                  minutes++;
-                  minutesRef.value++;
-                  if(minutes == 60){
-                      minutes = 0;
-                      hours++;
-                  }
-              }
-          }
-          let h = hours < 10 ? "0" + hours : hours;
-          let m = minutes < 10 ? "0" + minutes : minutes;
-          let s = seconds < 10 ? "0" + seconds : seconds;
-          let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
-          timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+        end = Date.now();
+        let elapsed = end - start;
+        let elapsedMinutes = Math.floor(elapsed / 60000);
+        hours = Math.floor(elapsedMinutes / 60);
+        minutes = elapsedMinutes % 60;
+        seconds = Math.floor((elapsed % 60000) / 1000);
+        milliseconds = elapsed % 1000;
+        // show hours, minutes, and seconds as two digits
+        hours = hours.toString().padStart(2, '0');
+        minutes = minutes.toString().padStart(2, '0');
+        seconds = seconds.toString().padStart(2, '0');
+        // show milliseconds as three digits
+        milliseconds = milliseconds.toString().padStart(3, '0');
+        timerRef.innerHTML = ` ${hours} : ${minutes} : ${seconds} : ${milliseconds}`;
+        minutesRef.value = elapsedMinutes;
       }
     </script>
   <% end %>
