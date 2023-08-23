@@ -1,6 +1,6 @@
 class Practice < ApplicationRecord
   belongs_to :user
-  belongs_to :focus
+  belongs_to :focus, optional: true
   validates :minutes, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :practice_date, presence: true #, timeliness: { type: :date }
   validates :user, presence: true
