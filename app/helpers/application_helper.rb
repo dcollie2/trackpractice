@@ -24,4 +24,16 @@ module ApplicationHelper
       ""
     end
   end
+
+  # given a target and actual, return a class for the goal background with green if they are equal
+  # red if actual is less than a third of the target, yellow if actual is less than two thirds of the target
+  def goal_background(target, actual)
+    if actual >= target
+      "bg-success"
+    elsif actual <= target / 3
+      "bg-danger"
+    else
+      "bg-warning"
+    end
+  end
 end
