@@ -1,0 +1,22 @@
+<div id="<%= dom_id song %>">
+  <p>
+    <strong>Title:</strong>
+    <%= song.title %>  &mdash; <%= minutes_in_words(song.practices.this_week_total) %> this week &mdash; <%= minutes_in_words(song.total_practice_time) %> total
+  </p>
+
+  <p>
+    <strong>Lyrics:</strong>
+    <%= song.lyrics %>
+  </p>
+
+  <p>
+    <strong>Chords:</strong>
+    <%= song.chords %>
+  </p>
+
+  <p>
+    <strong>Shared:</strong>
+    <%= song.shared %>
+  </p>
+
+</div>

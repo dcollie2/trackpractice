@@ -11,6 +11,7 @@
       </div>
     </div>
     <%= content_tag :h2, practice.focus.short_description if practice.focus.present? %>
+    <%= content_tag :h2, practice.song.title if practice.song.present? %>
     <p><%= practice.notes %></p>
     <!-- END : Profile picture and short information -->
 

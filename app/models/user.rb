@@ -7,4 +7,5 @@ class User < ApplicationRecord
 
   has_many :practices
   has_many :foci
+  has_many :songs
 end

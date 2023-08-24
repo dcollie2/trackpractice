@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :songs
   resources :foci
   resources :pages
   devise_for :users

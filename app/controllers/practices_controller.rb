@@ -4,7 +4,7 @@ class PracticesController < ApplicationController
 
   # GET /practices or /practices.json
   def index
-    @practices = current_user.practices.this_week.order(practice_date: :desc)
+    @practices = current_user.practices.order(practice_date: :desc)
   end
 
   # GET /practices/1 or /practices/1.json
@@ -64,6 +64,6 @@ class PracticesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def practice_params
-      params.require(:practice).permit(:practice_date, :minutes, :notes, :user_id, :focus_id)
+      params.require(:practice).permit(:practice_date, :minutes, :notes, :user_id, :focus_id, :song_id)
     end
 end
