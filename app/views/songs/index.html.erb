@@ -2,13 +2,18 @@
 
 <h1>Songs</h1>
 
-<div id="songs">
-  <% @songs.each do |song| %>
-    <%= render song %>
-    <p>
-      <%= link_to "Show this song", song %>
-    </p>
-  <% end %>
-</div>
+<p><%= link_to "<i class='bi bi-music-note'></i> New Song".html_safe, new_focus_path, class: 'btn btn-outline-primary' %></p>
 
-<%= link_to "New song", new_song_path %>
+<table class='table table-striped'>
+  <theader>
+    <tr>
+      <th>Title</th>
+      <th>This Week</th>
+      <th>Total</th>
+    </tr>
+  </theader>
+  <tbody>
+    <%= render @songs %>
+  </tbody>
+</table>
+

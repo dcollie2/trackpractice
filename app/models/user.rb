@@ -6,6 +6,6 @@ class User < ApplicationRecord
          :trackable, :confirmable, :lockable
 
   has_many :practices
-  has_many :foci
-  has_many :songs
+  has_many :foci, -> { order(short_description: :asc) }
+  has_many :songs, -> { order(title: :asc) }
 end

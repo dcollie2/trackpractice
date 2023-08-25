@@ -4,7 +4,7 @@ class FociController < ApplicationController
 
   # GET /foci or /foci.json
   def index
-    @foci = current_user.foci.all
+    @foci = current_user.foci.all.order(short_description: :asc)
   end
 
   # GET /foci/1 or /foci/1.json

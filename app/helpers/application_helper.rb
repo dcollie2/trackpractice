@@ -36,4 +36,53 @@ module ApplicationHelper
       "bg-warning"
     end
   end
+
+  def edit_button(item)
+    link_to icon_text('bi', 'pencil-square', "Edit #{item_class_name(item)}"),
+            edit_polymorphic_path(item),
+            class: 'btn btn-sm btn-primary'
+  end
+
+  def delete_button(item)
+    icon_button_with_confirm('bi', 'trash3', "Delete #{item_class_name(item)}",
+                             item,
+                             method: :delete,
+                             class: 'btn btn-sm btn-outline-danger')
+  end
+
+  def item_class_name(item)
+    item.class.name.blank? ? item.id : item.class.name.capitalize
+  end
+
+  def icon(type, name)
+    content_tag(:i, nil, class: "#{type} bi-#{name}")
+  end
+
+  def icon_text(type, name, text)
+    "#{icon(type, name)} #{text}".html_safe
+  end
+
+  # def icon_link(type, name, text, path)
+  #   link_to icon_text(type, name, text), path
+  # end
+
+  # def icon_button(type, name, text, path, options={})
+  #   link_to icon_text(type, name, text), path, options
+  # end
+
+  def icon_button_with_confirm(type, name, text, path, options={})
+    link_to icon_text(type, name, text), path, options.merge(data: { confirm: 'Are you sure?' })
+  end
+
+  def display_field(item, field)
+    if item.send(field).blank?
+      return
+    else
+      content_tag :div do
+        concat content_tag :h2, field.to_s.titleize
+        concat content_tag :p, item.send(field)
+      end
+    end
+  end
+
 end

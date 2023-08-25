@@ -1,10 +1,38 @@
-<p style="color: green"><%= notice %></p>
+<div id="<%= dom_id @focus %>">
+  <h1>Focusing on <%= @focus.short_description %></h1>
+  <p>
+    <%= minutes_in_words(@focus.practices.this_week_total) %> this week &mdash; <%= minutes_in_words(@focus.total_practice_time) %> total
+  </p>
 
-<%= render @focus %>
-
-<div>
-  <%= link_to "Edit this focus", edit_focus_path(@focus) %> |
-  <%= link_to "Back to foci", foci_path %>
-
-  <%= button_to "Destroy this focus", @focus, method: :delete %>
 </div>
+
+<% if @focus.user == current_user || current_user.admin? %>
+  <div>
+    <%= edit_button(@focus) %>
+    <%= delete_button(@focus) %>
+  </div>
+<% end %>
+
+<% if @focus.practices %>
+  <h2>Practices</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Duration</th>
+        <th>Song</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @focus.practices.each do |practice| %>
+        <tr>
+          <td><%= practice.practice_date.strftime("%A, %B %e, %Y") %></td>
+          <td><%= minutes_in_words(practice.minutes) %></td>
+          <td><%= link_to practice.song.title, song_path(practice.song) if practice.song.present? %></td>
+          <td><%= practice.notes %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end%>

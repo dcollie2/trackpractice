@@ -3,7 +3,7 @@ class SongsController < ApplicationController
 
   # GET /songs or /songs.json
   def index
-    @songs = current_user.songs.all
+    @songs = current_user.songs.all.order(title: :asc)
   end
 
   # GET /songs/1 or /songs/1.json

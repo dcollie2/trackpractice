@@ -1,5 +1,7 @@
 <%= turbo_frame_tag focus do %>
-  <p>
-    <%= focus.short_description %> &mdash; <%= minutes_in_words(focus.practices.this_week_total) %> this week &mdash; <%= minutes_in_words(focus.total_practice_time) %> total
-  </p>
+  <tr>
+    <td><%= link_to focus.short_description, focus %></td>
+    <td><%= minutes_in_words(focus.practices.this_week_total) %></td>
+    <td><%= minutes_in_words(focus.total_practice_time) %></td>
+  </tr>
 <% end %>
