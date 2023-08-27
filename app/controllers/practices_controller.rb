@@ -26,8 +26,7 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to practices_url, notice: "Practice was successfully created." }
-        # format.turbo_stream { flash.now[:notice] = "Practice was successfully created." }
+        format.html { redirect_to practices_url, notice: 'Practice was successfully created.' }
       else
         render :new, status: :unprocessable_entity
       end
@@ -38,7 +37,7 @@ class PracticesController < ApplicationController
   def update
     respond_to do |format|
       if @practice.update(practice_params)
-        format.html { redirect_to practices_url, notice: "Practice was successfully updated." }
+        format.html { redirect_to practices_url, notice: 'Practice was successfully updated.' }
         format.json { render :show, status: :ok, location: @practice }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +51,20 @@ class PracticesController < ApplicationController
     @practice.destroy
 
     respond_to do |format|
-      format.html { redirect_to practices_url, notice: "Practice was successfully destroyed." }
+      format.html { redirect_to practices_url, notice: 'Practice was successfully destroyed.' }
       format.turbo_stream { render turbo_stream: turbo_stream.remove(@practice) }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_practice
-      @practice = current_user.practices.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def practice_params
-      params.require(:practice).permit(:practice_date, :minutes, :notes, :user_id, :focus_id, :song_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_practice
+    @practice = current_user.practices.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def practice_params
+    params.require(:practice).permit(:practice_date, :minutes, :notes, :user_id, :focus_id, :song_id)
+  end
 end
