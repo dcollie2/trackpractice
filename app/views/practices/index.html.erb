@@ -1,5 +1,5 @@
 <h1>Practices</h1>
-<p>You've practiced <%= '%d hours and %02d minutes' % current_user.practices.sum(:minutes).divmod(60) %> since <%= practice_date(current_user.practices.first_practice_date, false) %></p>
+<p data-controller="practices">You've practiced <%= '%d hours and %02d minutes' % current_user.practices.sum(:minutes).divmod(60) %> since <%= practice_date(current_user.practices.first_practice_date, false) %></p>
 
 <h2>In the past 7 days, you've practiced
   <span class="badge <%= goal_background(7, current_user.practices.this_week_grouped.size) %>">
