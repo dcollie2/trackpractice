@@ -7,7 +7,7 @@ class Practice < ApplicationRecord
   validates :user, presence: true
   validates :notes, length: { maximum: 1000 }
 
-  scope :this_week, -> { where("practice_date >= ?", Date.today - 7.days) }
+  scope :this_week, -> { where(practice_date: 1.week.ago.beginning_of_day..Date.current.end_of_day) }
   # get all practices for this week, grouped by day, and sum the minutes for each day
   scope :this_week_grouped, -> { this_week.select("to_char(DATE(practice_date), 'Day')").group("to_char(DATE(practice_date), 'Day')").sum(:minutes) }
   # get total sum of minutes for this week
