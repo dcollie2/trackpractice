@@ -1,18 +1,21 @@
 <h1>Practices</h1>
-<p data-controller="hello">You've practiced <%= '%d hours and %02d minutes' % current_user.practices.sum(:minutes).divmod(60) %> since <%= practice_date(current_user.practices.first_practice_date, false) %></p>
+<div id="stats-summary">
+  <p data-controller="hello">Since <%= practice_date(current_user.practices.first_practice_date, false) %>, you've practiced <%= '%d hours and %02d minutes' % current_user.practices.sum(:minutes).divmod(60) %></p>
 
-<h2>In the past 7 days, you've practiced
-  <span class="badge <%= goal_background(7, current_user.practices.this_week_grouped.size) %>">
-    <%= current_user.practices.this_week_grouped.size %> Days
-  </span> totaling
-  <span class="badge bg-success">
-    <%= minutes_in_words(current_user.practices.this_week_total) %>
-  </span>
-</h2>
+  <h2>In the past 7 days, you've practiced
+    <span class="badge <%= goal_background(7, current_user.practices.this_week_grouped.size) %>">
+      <%= current_user.practices.this_week_grouped.size %> Days
+    </span> totaling
+    <span class="badge bg-success">
+      <%= minutes_in_words(current_user.practices.this_week_total) %>
+    </span>
+  </h2>
+</div>
 
 <p><%= link_to "<i class='bi bi-music-note'></i> New practice".html_safe, new_practice_path, data: { turbo_frame: "new_practice" }, class: 'btn btn-outline-primary' %></p>
 
 <%= turbo_frame_tag "new_practice", target: "_top" %>
 
-<%= render @practices %>
-
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <%= render @practices %>
+</div>
