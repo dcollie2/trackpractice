@@ -1,10 +1,11 @@
 class PracticesController < ApplicationController
   before_action :set_practice, only: %i[ show edit update destroy ]
+  before_action :set_current_week, only: :index
   before_action :authenticate_user!
 
   # GET /practices or /practices.json
   def index
-    @practices = current_user.practices.order(practice_date: :desc)
+    @practices = current_user.practices.in_week(@current_week).order(practice_date: :desc)
   end
 
   # GET /practices/1 or /practices/1.json
@@ -66,5 +67,9 @@ class PracticesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def practice_params
     params.require(:practice).permit(:practice_date, :minutes, :notes, :user_id, :focus_id, :song_id)
+  end
+
+  def set_current_week
+    @current_week = params[:week] ? params[:week].to_i : Date.current.beginning_of_week
   end
 end
