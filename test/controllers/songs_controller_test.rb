@@ -3,6 +3,8 @@ require "test_helper"
 class SongsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @song = songs(:one)
+    @user = @song.user
+    sign_in @user
   end
 
   test "should get index" do
