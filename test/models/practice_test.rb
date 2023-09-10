@@ -58,6 +58,15 @@ class PracticeTest < ActiveSupport::TestCase
     assert_not practice.save
   end
 
+  test 'in week returns practices from the first minute of the week to the last minute in the week' do
+    beginning_of_week = (Date.today - 1.week).beginning_of_week
+    practice = practices(:one)
+    practice.update(practice_date: "#{beginning_of_week.to_s} 00:00:01")
+    last_practice = practices(:two)
+    last_practice.update(practice_date: "#{beginning_of_week.end_of_week.to_s} 23:23:59")
+    assert Practice.in_week(beginning_of_week).size == 2
+  end
+
   # had to do this in the controller
   # test "date defaults to current date" do
   #   practice = Practice.new(user: @user)
