@@ -70,6 +70,15 @@ class PracticesController < ApplicationController
   end
 
   def set_current_week
-    @current_week = params[:week] ? params[:week].to_i : Date.current.beginning_of_week
+    # if params[:week] is a valid date, set @current_week to that date
+    # if params[:week] is not present or invalid, use the current week
+    # if params[:week] is in the future, use the current week
+    @current_week = Date.current.beginning_of_week
+    if params[:week]
+      begin
+        @current_week = Date.parse(params[:week]).beginning_of_week
+      rescue ArgumentError
+      end
+    end
   end
 end

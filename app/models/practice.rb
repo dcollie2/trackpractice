@@ -14,7 +14,8 @@ class Practice < ApplicationRecord
   scope :this_week_total, -> { this_week.sum(:minutes) }
   # get earliest practice_date
   scope :first_practice_date, -> { order(:practice_date).first.practice_date }
-  scope :in_week, ->(date) { where(practice_date: date.beginning_of_week..date.end_of_week) }
+
+  scope :in_week, ->(date) { where(practice_date: date.beginning_of_week..(date + 1.week).beginning_of_week) }
   scope :grouped_by_day, -> { select("to_char(DATE(practice_date), 'Day')").group("to_char(DATE(practice_date), 'Day')").sum(:minutes) }
   scope :on_date, ->(date) { where(practice_date: date.beginning_of_day..date.end_of_day) }
 
