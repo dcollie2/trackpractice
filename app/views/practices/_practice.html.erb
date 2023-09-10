@@ -1,6 +1,6 @@
 <div class="col mb-3" id="<%= dom_id(practice) %>">
   <%= turbo_frame_tag practice, class: 'card col-md-12' do %>
-    <div class="card-header bg-info">
+    <div class="card-header bg-secondary-subtle">
       <div class="row">
         <div class="col-md-6">
           <h5 class="h5 m-0"><%= practice_date(practice.practice_date) %></h5>
@@ -20,7 +20,7 @@
       <% end %>
 
     </div>
-    <div class="card-footer bg-info-subtle">
+    <div class="card-footer bg-secondary-subtle">
       <div class="d-flex justify-content-end">
         <%= link_to "Edit", edit_practice_path(practice), class: "btn btn-primary me-2" %>
         <%= button_to "Delete", practice_path(practice), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this practice?" }, class: "btn btn-danger" %>
