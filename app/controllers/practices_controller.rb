@@ -1,11 +1,13 @@
 class PracticesController < ApplicationController
+  before_action :set_focus_user, only: :index
   before_action :set_practice, only: %i[ show edit update destroy ]
   before_action :set_current_week, only: :index
+  # before_action :set_focus_user, only: :index
   before_action :authenticate_user!
 
   # GET /practices or /practices.json
   def index
-    @practices = current_user.practices.in_week(@current_week).order(practice_date: :desc)
+    @practices = @focus_user.practices.in_week(@current_week).order(practice_date: :desc)
   end
 
   # GET /practices/1 or /practices/1.json
@@ -58,6 +60,18 @@ class PracticesController < ApplicationController
   end
 
   private
+
+  def set_focus_user
+    if params[:user_id]
+      if current_user.admin?
+        @focus_user = User.find(params[:user_id])
+      else
+        @focus_user = User.with_public_practices.find(params[:user_id])
+      end
+    end
+
+    @focus_user = current_user if @focus_user.nil?
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_practice

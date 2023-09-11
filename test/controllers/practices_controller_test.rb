@@ -28,6 +28,10 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to practices_url
   end
 
+  test "should set focus user if that user is public"
+
+  test "should not set focus user if that user is not public"
+
   # not really, since we're going single page
   # test "should show practice" do
   #   sign_in @user

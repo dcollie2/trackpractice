@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resources :foci
   resources :pages
   devise_for :users
-  resources :users, except: [:create, :new]
+  resources :users, except: [:create, :new] do
+    resources :practices, only: [:index]
+  end
   resources :practices
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

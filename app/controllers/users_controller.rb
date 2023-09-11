@@ -1,13 +1,16 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
-    @users = User.all
+    if current_user.admin?
+      @users = User.all
+    else
+      @users = User.with_public_practices + [current_user]
+    end
   end
 
   def show
-    @user = User.find(params[:user_id])
   end
 
   def edit
@@ -36,13 +39,16 @@ class UsersController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
+
   def set_user
-    @user = User.find(params[:id])
+    @user = current_user.admin? ? User.find(params[:id]) : current_user
   end
 
-  # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:email, :admin)
+    if current_user.admin?
+      params.require(:user).permit(:email, :admin, :make_practices_public)
+    else
+      params.require(:user).permit(:email, :make_practices_public)
+    end
   end
 end
