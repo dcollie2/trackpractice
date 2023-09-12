@@ -5,7 +5,7 @@
   <% (0..6).each do |i| %>
     <% date = @current_week + i.days %>
     <% practices = @focus_user.practices.on_date(date) %>
-    <div class="col border border-light text-center text-white <%= day_background(date, practices) %> <%= i == 0 ? 'rounded-start' : '' %> <%= i == 6 ? 'rounded-end' : '' %>">
+    <div class="col border border-light text-center text-white <%= day_background(date, practices) %> bg-gradient <%= i == 0 ? 'rounded-start' : '' %> <%= i == 6 ? 'rounded-end' : '' %>">
       <div class="p-3 d-flex justify-content-center align-items-center flex-column">
         <div class="mb-2">
           <strong><%= date.strftime("%A") %></strong>

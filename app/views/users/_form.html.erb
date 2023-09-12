@@ -9,6 +9,11 @@
             <%= form.email_field :email, class: 'form-control' %>
           </div>
           <div class="mb-3">
+            <%# make a selction box for time zones %>
+            <%= form.label :time_zone, class: "form-label" %>
+            <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.all, class: 'form-control' %>
+          </div>
+          <div class="mb-3">
             <%= form.check_box :admin, class: 'form-check-input' if current_user.admin? %>
             <%= form.label :admin, class: "form-check-label" %>
           </div>
