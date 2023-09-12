@@ -16,7 +16,7 @@ class PracticesController < ApplicationController
 
   # GET /practices/new
   def new
-    @practice = Practice.new(user: current_user, practice_date: DateTime.current)
+    @practice = Practice.new(user: current_user, practice_date: DateTime.current.in_time_zone(current_user.time_zone))
   end
 
   # GET /practices/1/edit
