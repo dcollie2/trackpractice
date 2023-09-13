@@ -28,18 +28,18 @@ class Practice < ApplicationRecord
 
   scope :on_date, ->(date) { where(practice_date: date.beginning_of_day..date.end_of_day) }
 
-  # given a result set of practice dates and minutes
-  # return a hash of dates and minutes
-  # with missing days added with zero minutes
-  def self.fill_in_missing_days(practices, date)
-    date.beginning_of_month..date.end_of_month do |day|
-      if practices.select(day).empty?
-        practices[day] = 0
-      end
+    # loop from the begnning of date's month to the end of date's month
+    # for each day, if the day is not in the practices hash, add it with 0 minutes
+    # if the day is in the practices hash, do nothing
+    # return the practices hash
+    def self.fill_in_missing_days(practices, date)
+    (date.beginning_of_month..date.end_of_month).each do |day|
+      logger.debug(day.strftime("%a, %d %b %Y"))
+      current_day = day.strftime("%a, %d %b %Y")
+      practices[day] = 0 unless practices.key?(day)
     end
     practices
   end
-
 
   def show_timer?
     new_record?
