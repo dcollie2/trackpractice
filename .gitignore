@@ -38,4 +38,8 @@
 .env
 
 /.idea/*
+.DS_Storecoverage
 .DS_Store
+app/.DS_Store
+app/assets/.DS_Store
+/coverage

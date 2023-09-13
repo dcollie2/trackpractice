@@ -17,6 +17,28 @@ module ApplicationHelper
     end
   end
 
+  # given a number of minutes, return a string of hours and minutes
+  # 90 minutes => 1 hour 30 minutes
+  # 60 minutes => 1 hour
+  # 30 minutes => 30 minutes
+  # 0 minutes => 0 minutes
+  def hours_and_minutes_in_words(span)
+    span = 0 if span.blank?
+    if span == 0
+      '0 minutes'
+    else
+      hours = span / 60
+      minutes = span % 60
+      if hours > 0 && minutes > 0
+        "#{pluralize(hours, "hour")} #{pluralize(minutes, 'minute')}"
+      elsif hours > 0
+        pluralize(hours, 'hour')
+      else
+        pluralize(minutes, 'minute')
+      end
+    end
+  end
+
   def active_state(controller)
     if params[:controller] == controller
       "active"
