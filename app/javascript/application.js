@@ -4,4 +4,6 @@ import "controllers"
 import 'bootstrap'
 import 'popper'
 import 'trackpractice'
+import "chartkick"
+import "Chart.bundle"
 
