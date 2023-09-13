@@ -2,8 +2,3 @@
 <%= render @user %>
 
 <% link_to user_practices(@user) if @user != current_user %>
-
-<% if @user.practices.present? %>
-  <h2>Practice History</h2>
-  <%= area_chart @user.practices.grouped_by_day(&:minutes), ytitle: "Minutes" %>
-<% end %>
