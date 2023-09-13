@@ -6,3 +6,5 @@ pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin 'popper', to: 'popper.js', preload: true
 pin 'bootstrap', to: 'bootstrap.min.js', preload: true
 pin 'trackpractice', to: 'trackpractice.js', preload: true
+pin "chartkick", to: "chartkick.js"
+pin "Chart.bundle", to: "Chart.bundle.js"

@@ -28,6 +28,9 @@ gem 'jbuilder'
 
 gem 'pry'
 
+gem "chartkick"
+
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 

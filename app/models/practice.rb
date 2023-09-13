@@ -14,12 +14,14 @@ class Practice < ApplicationRecord
   # get total sum of minutes for this week
   scope :this_week_total, -> { this_week.sum(:minutes) }
 
+  # get all practicds grouped by practice date without time, and sum the minutes for each day
+  scope :grouped_by_day, -> { select("DATE(practice_date)").group("DATE(practice_date)").sum(:minutes) }
+
   # get earliest practice_date
   scope :first_practice_date, -> { order(:practice_date).first.practice_date }
 
   scope :in_week, ->(date) { where(practice_date: date.beginning_of_week.beginning_of_day..date.end_of_week.end_of_day) }
 
-  scope :grouped_by_day, -> { select("to_char(DATE(practice_date), 'Day')").group("to_char(DATE(practice_date), 'Day')").sum(:minutes) }
   scope :on_date, ->(date) { where(practice_date: date.beginning_of_day..date.end_of_day) }
 
   def show_timer?
