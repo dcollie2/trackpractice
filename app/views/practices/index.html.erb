@@ -53,7 +53,7 @@
 
   <div id="collapseOne" class="collapse open show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
     <div class="card-body">
-      <%= area_chart Practice.fill_in_missing_days(@focus_user.practices.this_month(@current_week).grouped_by_day(&:minutes), @current_week), ytitle: "Minutes" %>
+      <%= area_chart Practice.month_of_practices(@current_week, @focus_user), ytitle: "Minutes" %>
     </div>
   </div>
 </div>

@@ -24,21 +24,41 @@ class Practice < ApplicationRecord
   # get earliest practice_date
   scope :first_practice_date, -> { order(:practice_date).first.practice_date }
 
-  scope :in_week, ->(date) { where(practice_date: date.beginning_of_week.beginning_of_day..date.end_of_week.end_of_day) }
+  scope :in_week, ->(date) { where(practice_date: date.beginning_of_week.beginning_of_day..(date + 1.week).beginning_of_day) }
 
   scope :on_date, ->(date) { where(practice_date: date.beginning_of_day..date.end_of_day) }
 
-    # loop from the begnning of date's month to the end of date's month
-    # for each day, if the day is not in the practices hash, add it with 0 minutes
-    # if the day is in the practices hash, do nothing
-    # return the practices hash
-    def self.fill_in_missing_days(practices, date)
-    (date.beginning_of_month..date.end_of_month).each do |day|
-      logger.debug(day.strftime("%a, %d %b %Y"))
-      current_day = day.strftime("%a, %d %b %Y")
-      practices[day] = 0 unless practices.key?(day)
+  def practice_day(focus_user)
+    practice_date.in_time_zone(focus_user).strftime("%a, %d %b %Y")
+  end
+
+  def self.a_dull_month(date)
+    # create a hash for each day of the date's month
+    # add each day as the key
+    # add 0 as the value
+    (date.beginning_of_month..date.end_of_month).each_with_object({}) do |day, hash|
+      hash[day.strftime("%a, %d %b %Y")] = 0
     end
-    practices
+  end
+
+  def self.month_of_practices(date, focus_user)
+    practice_days = focus_user.practices.this_month(date).group_by { |practice| practice.practice_day(focus_user.time_zone) }.collect { |p, ps| [p, ps.sum(&:minutes)] }
+    a_dull_month(date).merge!(practice_days.to_h)
+  end
+
+
+  # loop from the begnning of date's month to the end of date's month
+  # for each day, if the day is not in the practices hash, add it with 0 minutes
+  # if the day is in the practices hash, do nothing
+  # return the practices hash
+  def self.fill_in_missing_days(practices, date)
+    practice_hash = practices.group_by { |x| x.practice_day(@focus_user)}.collect { |d, p| [d, p.sum(&:minutes)]}.to_h
+    month_hash = {}
+    (date.beginning_of_month..date.end_of_month).each do |day|
+      current_day = day.strftime("%a, %d %b %Y")
+      new_hash.merge!(current_day => 0)
+    end
+    month_hash.merge!(practice_hash)
   end
 
   def show_timer?
