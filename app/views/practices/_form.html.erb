@@ -32,13 +32,13 @@
       <% if current_user.foci.present? %>
         <div class="col-md-6">
           <%= form.label :focus_id, class: 'form-label' %>
-          <%= form.select :focus_id, current_user.foci.map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, class: "form-control" %>
+          <%= form.select :focus_id, current_user.foci.order(:short_description).map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, class: "form-control" %>
         </div>
       <% end %>
       <% if current_user.songs.present? %>
         <div class="col-md-6">
           <%= form.label :song_id, class: 'form-label' %>
-          <%= form.select :song_id, current_user.songs.map { |t| [t.title, t.id]}, { include_blank: "Choose a song for this practice if you wish" }, class: "form-control" %>
+          <%= form.select :song_id, current_user.songs.order(:title).map { |t| [t.title, t.id]}, { include_blank: "Choose a song for this practice if you wish" }, class: "form-control" %>
         </div>
       <% end %>
     </div>
