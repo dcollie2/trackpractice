@@ -24,11 +24,10 @@ class User < ApplicationRecord
 
     practices.order(practice_date: :desc).group_by(&:practice_date).each_with_index do |(date, practices), index|
       practice_date = date.in_time_zone(time_zone).to_date
-      break if index == 0 && practice_date != today
 
-      if index == 0 && practice_date == today
+      if index <= 1 && practice_date == today
         streak += 1
-      elsif index > 0 && practice_date == today - index.days
+      elsif index > 1 && practice_date == today - index.days
         streak += 1
       else
         break
