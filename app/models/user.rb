@@ -20,13 +20,15 @@ class User < ApplicationRecord
     # for each practice_date.to_date, if the next practice_date.to_date is the day after, increment the streak
     # if the next practice_date.to_date is not the day after, break the loop
     # return the streak
-    practices.order(practice_date: :desc).group_by(&:practice_date).each_with_index do |(date, practices), index|
-      practice_date = date.to_date
-      break if index == 0 && practice_date != Date.today
+    today = DateTime.current.in_time_zone(time_zone).to_date
 
-      if index == 0 && practice_date == Date.today
+    practices.order(practice_date: :desc).group_by(&:practice_date).each_with_index do |(date, practices), index|
+      practice_date = date.in_time_zone(time_zone).to_date
+      break if index == 0 && practice_date != today
+
+      if index == 0 && practice_date == today
         streak += 1
-      elsif index > 0 && practice_date == Date.today - index.days
+      elsif index > 0 && practice_date == today - index.days
         streak += 1
       else
         break
