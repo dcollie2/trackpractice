@@ -22,14 +22,18 @@ class User < ApplicationRecord
     # return the streak
     today = DateTime.current.in_time_zone(time_zone).to_date
 
-    practices.order(practice_date: :desc).group_by(&:practice_date).each_with_index do |(date, practices), index|
+    practices.order(practice_date: :desc).group_by { |p| p.practice_day(time_zone) }.each_with_index do |(date, practices), index|
       practice_date = date.in_time_zone(time_zone).to_date
+      Rails.logger.debug "practice_date: #{practice_date}"
 
-      if index <= 1 && practice_date == today
+      if index <= 0 && (practice_date == today || practice_date == today - 1.day)
         streak += 1
-      elsif index > 1 && practice_date == today - index.days
+        Rails.logger.debug "streak: #{streak} - FIRST CONDITION"
+      elsif index > 0 && practice_date == today - index.days
         streak += 1
+        Rails.logger.debug "streak: #{streak} - SECOND CONDITION"
       else
+        Rails.logger.debug "streak: #{streak} - BREAKING - #{practice_date} != #{today - index.days}"
         break
       end
     end
