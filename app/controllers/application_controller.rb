@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   around_action :set_time_zone, if: :current_user
+  before_action :enable_hotflash
 
     private
 

@@ -111,6 +111,7 @@ GEM
     ffi (1.15.5)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hot_flash (1.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.1)
@@ -290,6 +291,7 @@ DEPENDENCIES
   debug
   devise
   dockerfile-rails (>= 1.5)
+  hot_flash (~> 1.1)
   importmap-rails (~> 1.2)
   jbuilder
   pg (~> 1.1)

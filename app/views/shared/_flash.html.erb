@@ -1,0 +1,10 @@
+<div id="flashes">
+  <% flash.each do |key, value| %>
+    <% unless flash_blacklist(key) %>
+      <%= content_tag(:div, class: flash_class(key), role: 'alert', data: { controller: 'flash' } ) do %>
+        <%= value %>
+        <button type="button" class="btn-close" data-action="flash#dismiss" aria-label="Close"></button>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

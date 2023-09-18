@@ -40,8 +40,13 @@ class PracticesController < ApplicationController
   def update
     respond_to do |format|
       if @practice.update(practice_params)
+        flash[:notice] = "Practice was successfully updated."
         format.html { redirect_to practices_url, notice: 'Practice was successfully updated.' }
-        format.json { render :show, status: :ok, location: @practice }
+        format.turbo_stream { render turbo_stream: [
+          turbo_stream.replace(@practice, partial: "practices/practice", locals: { practice: @practice })
+          ]
+         }
+        format.json { render :show, status: :ok, location: @practice, notice: 'Practice was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @practice.errors, status: :unprocessable_entity }
@@ -54,8 +59,9 @@ class PracticesController < ApplicationController
     @practice.destroy
 
     respond_to do |format|
+      flash[:notice] = "Practice was successfully destroyed."
       format.html { redirect_to practices_url, notice: 'Practice was successfully destroyed.' }
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@practice) }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@practice), notice: 'Practice was successfully destroyed.' }
     end
   end
 

@@ -88,3 +88,5 @@ gem 'sentry-rails', '~> 5.10'
 
 gem 'devise'
 gem 'sendgrid-ruby'
+
+gem "hot_flash", "~> 1.1"

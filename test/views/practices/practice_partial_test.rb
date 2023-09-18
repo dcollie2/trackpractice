@@ -2,6 +2,7 @@ require 'test_helper'
 
 class PracticePartialTest < ActionView::TestCase
   include ActionView::TestCase::Behavior
+  include ApplicationHelper
 
   def setup
     @practice = practices(:one)
@@ -12,13 +13,13 @@ class PracticePartialTest < ActionView::TestCase
   test 'displays the practice date' do
     render partial: 'practices/practice', locals: { practice: @practice }
 
-    assert_select 'h5', text: helper.practice_date(@practice.practice_date)
+    assert_select 'h5', text: practice_date(@practice.practice_date)
   end
 
   test 'displays the practice minutes in words' do
     render partial: 'practices/practice', locals: { practice: @practice }
 
-    assert_select 'h5', text: helper.minutes_in_words(@practice.minutes)
+    assert_select 'h5', text: minutes_in_words(@practice.minutes)
   end
 
   test 'displays the focus short description' do

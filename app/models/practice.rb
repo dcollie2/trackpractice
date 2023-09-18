@@ -46,7 +46,6 @@ class Practice < ApplicationRecord
     a_dull_month(date).merge!(practice_days.to_h)
   end
 
-
   # loop from the begnning of date's month to the end of date's month
   # for each day, if the day is not in the practices hash, add it with 0 minutes
   # if the day is in the practices hash, do nothing

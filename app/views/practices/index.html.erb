@@ -1,7 +1,7 @@
 <h1 class='mt-4'>Week of <%= practice_date(@current_week, false) %></h1>
 <%= content_tag :h2, "Viewing #{@focus_user.email}'s practices" if @focus_user != current_user %>
 
-<%= render partial: 'streak', locals: { user: @focus_user } %>
+<%= render partial: 'streak', locals: { user: @focus_user } if @focus_user.practices.present? %>
 
 <div class="row mx-1">
   <% (0..6).each do |i| %>

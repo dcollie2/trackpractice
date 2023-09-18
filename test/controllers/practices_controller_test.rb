@@ -28,9 +28,21 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to practices_url
   end
 
-  test "should set focus user if that user is public"
+  test "should set focus user if that user is public" do
+    another_user = users(:another_user)
+    another_user.update!(make_practices_public: true)
+    sign_in @user
+    get practices_url, params: { user_id: another_user.id }
+    assert_response :success
+    assert response.body.include?(another_user.email)
+  end
 
-  test "should not set focus user if that user is not public"
+  test "should not set focus user if that user is not public" do
+    another_user = users(:another_user)
+    sign_in @user
+    get practices_url, params: { user_id: another_user.id }
+    assert_response :redirect
+  end
 
   # not really, since we're going single page
   # test "should show practice" do
