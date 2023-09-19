@@ -27,10 +27,8 @@ class FociController < ApplicationController
     respond_to do |format|
       if @focus.save
         format.html { redirect_to foci_url, notice: "Focus was successfully created." }
-        format.json { render :show, status: :created, location: @focus }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @focus.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -40,10 +38,8 @@ class FociController < ApplicationController
     respond_to do |format|
       if @focus.update(focus_params)
         format.html { redirect_to foci_url, notice: "Focus was successfully updated." }
-        format.json { render :show, status: :ok, location: @focus }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @focus.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,8 +49,9 @@ class FociController < ApplicationController
     @focus.destroy
 
     respond_to do |format|
+      flash[:notice] = "Focus was successfully destroyed."
       format.html { redirect_to foci_url, notice: "Focus was successfully destroyed." }
-      format.json { head :no_content }
+      format.turbo_stream { redirect_to foci_url, notice: "Focus was successfully destroyed." }
     end
   end
 

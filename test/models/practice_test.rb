@@ -67,6 +67,17 @@ class PracticeTest < ActiveSupport::TestCase
     assert Practice.in_week(beginning_of_week).size == 2
   end
 
+  test 'show_timer? is true if the record is new' do
+    test = Practice.new(user: @user)
+    assert test.show_timer?
+  end
+
+  test 'show_timer? is false if record has been saved' do
+    test = Practice.new(user: @user)
+    test.save
+    assert_not test.show_timer?
+  end
+
   # had to do this in the controller
   # test "date defaults to current date" do
   #   practice = Practice.new(user: @user)

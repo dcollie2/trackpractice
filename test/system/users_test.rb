@@ -21,6 +21,15 @@ class UsersTest < ApplicationSystemTestCase
     assert_no_text 'test3@test.test'
   end
 
+  test 'if admin, should see all users' do
+    logout
+    login_as @admin
+    visit users_url
+    assert_text 'test1@test.test'
+    assert_text 'test2@test.test'
+    assert_text 'test3@test.test'
+  end
+
   test "non-admins who try to edit another user's profile will see their own edit page"
 
   test "user emails should link to their profile page" do

@@ -27,10 +27,8 @@ class SongsController < ApplicationController
     respond_to do |format|
       if @song.save
         format.html { redirect_to song_url(@song), notice: "Song was successfully created." }
-        format.json { render :show, status: :created, location: @song }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -40,10 +38,8 @@ class SongsController < ApplicationController
     respond_to do |format|
       if @song.update(song_params)
         format.html { redirect_to song_url(@song), notice: "Song was successfully updated." }
-        format.json { render :show, status: :ok, location: @song }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,8 +49,9 @@ class SongsController < ApplicationController
     @song.destroy
 
     respond_to do |format|
+      flash[:notice] = "Song was successfully destroyed."
       format.html { redirect_to songs_url, notice: "Song was successfully destroyed." }
-      format.json { head :no_content }
+      format.turbo_stream { redirect_to songs_url, notice: "Song was successfully destroyed." }
     end
   end
 

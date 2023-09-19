@@ -20,10 +20,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_url, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -33,8 +31,9 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
+      flash[:notice] = "User was successfully destroyed."
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
+      format.turbo_stream { redirect_to users_url, notice: "User was successfully destroyed." }
     end
   end
 

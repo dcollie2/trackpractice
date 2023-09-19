@@ -1,6 +1,6 @@
 <h1>Foci</h1>
 
-<p><%= link_to "<i class='bi bi-music-note'></i> New focus".html_safe, new_focus_path, data: { turbo_frame: "new_focus" }, class: 'btn btn-outline-primary' %></p>
+<p><%= link_to "<i class='bi bi-music-note'></i> New Focus".html_safe, new_focus_path, data: { turbo_frame: "new_focus" }, class: 'btn btn-outline-primary', id: 'new-focus' %></p>
 
 <%= turbo_frame_tag "new_focus", target: "_top" %>
 

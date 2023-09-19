@@ -46,10 +46,8 @@ class PracticesController < ApplicationController
           turbo_stream.replace(@practice, partial: "practices/practice", locals: { practice: @practice })
           ]
          }
-        format.json { render :show, status: :ok, location: @practice, notice: 'Practice was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @practice.errors, status: :unprocessable_entity }
       end
     end
   end

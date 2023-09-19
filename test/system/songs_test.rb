@@ -3,6 +3,7 @@ require "application_system_test_case"
 class SongsTest < ApplicationSystemTestCase
   setup do
     @song = songs(:one)
+    login_as @song.user
   end
 
   test "visiting the index" do
@@ -12,37 +13,33 @@ class SongsTest < ApplicationSystemTestCase
 
   test "should create song" do
     visit songs_url
-    click_on "New song"
+    click_on "New Song"
 
     fill_in "Chords", with: @song.chords
     fill_in "Lyrics", with: @song.lyrics
     check "Shared" if @song.shared
     fill_in "Title", with: @song.title
-    fill_in "User", with: @song.user_id
     click_on "Create Song"
 
     assert_text "Song was successfully created"
-    click_on "Back"
   end
 
   test "should update Song" do
     visit song_url(@song)
-    click_on "Edit this song", match: :first
+    click_on "Edit Song", match: :first
 
     fill_in "Chords", with: @song.chords
     fill_in "Lyrics", with: @song.lyrics
     check "Shared" if @song.shared
     fill_in "Title", with: @song.title
-    fill_in "User", with: @song.user_id
     click_on "Update Song"
 
     assert_text "Song was successfully updated"
-    click_on "Back"
   end
 
   test "should destroy Song" do
     visit song_url(@song)
-    click_on "Destroy this song", match: :first
+    click_on "Delete Song", match: :first
 
     assert_text "Song was successfully destroyed"
   end
