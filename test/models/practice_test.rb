@@ -73,15 +73,9 @@ class PracticeTest < ActiveSupport::TestCase
   end
 
   test 'show_timer? is false if record has been saved' do
-    test = Practice.new(user: @user)
-    test.save
+    test = Practice.new(user: @user, practice_date: DateTime.current, minutes: 1)
+    test.save!
     assert_not test.show_timer?
   end
-
-  # had to do this in the controller
-  # test "date defaults to current date" do
-  #   practice = Practice.new(user: @user)
-  #   assert_equal Date.today, practice.practice_date
-  # end
 
 end

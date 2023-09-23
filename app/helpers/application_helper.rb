@@ -66,10 +66,7 @@ module ApplicationHelper
   end
 
   def delete_button(item)
-    icon_button_with_confirm('bi', 'trash3', "Delete #{item_class_name(item)}",
-                             item,
-                             method: :delete,
-                             class: 'btn btn-sm btn-outline-danger')
+    button_to icon_text('bi', 'trash3', "Delete #{item_class_name(item)}"), item, method: :delete, class: 'btn btn-sm btn-outline-danger', data: { turbo_confirm: 'Are you sure?' }
   end
 
   def item_class_name(item)
@@ -82,18 +79,6 @@ module ApplicationHelper
 
   def icon_text(type, name, text)
     "#{icon(type, name)} #{text}".html_safe
-  end
-
-  # def icon_link(type, name, text, path)
-  #   link_to icon_text(type, name, text), path
-  # end
-
-  # def icon_button(type, name, text, path, options={})
-  #   link_to icon_text(type, name, text), path, options
-  # end
-
-  def icon_button_with_confirm(type, name, text, path, options={})
-    link_to icon_text(type, name, text), path, options.merge(data: { confirm: 'Are you sure?' })
   end
 
   def display_field(item, field)

@@ -5,8 +5,9 @@
   <td><%= user.practices.count %></td>
   <td><%= user.created_at %></td>
   <td><%= user.confirmed_at %></td>
+  <td><%= edit_button(user) if user == current_user || current_user.admin? %></td>
   <% if current_user.admin? %>
     <td><%= user.admin? %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) if user == current_user || current_user.admin? %></td>
+    <td><%= delete_button(user) if current_user.admin? %></td>
   <% end %>
 </tr>

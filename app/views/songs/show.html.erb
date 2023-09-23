@@ -15,7 +15,7 @@
   <div>
     <%= edit_button(@song) %>
     <%= delete_button(@song) %>
-    <%= button_to "Delete", song_path(@song), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this song?" }, class: "btn btn-danger" %>
+    <%= button_to "Delete Song", song_path(@song), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this song?" }, class: "btn btn-danger" %>
 
   </div>
 <% end %>

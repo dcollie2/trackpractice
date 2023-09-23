@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_url, notice: "User was successfully updated." }
+        format.turbo_stream { redirect_to users_url, notice: "User was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -40,7 +41,13 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = current_user.admin? ? User.find(params[:id]) : current_user
+    if current_user.admin?
+      @user = User.find(params[:id])
+    elsif params[:id] == current_user.id.to_s
+      @user = current_user
+    else
+      @user = User.with_public_practices.find(params[:id])
+    end
   end
 
   def user_params

@@ -1,3 +1,4 @@
+require "test_helper"
 require "application_system_test_case"
 
 class SongsTest < ApplicationSystemTestCase
@@ -39,7 +40,9 @@ class SongsTest < ApplicationSystemTestCase
 
   test "should destroy Song" do
     visit song_url(@song)
-    click_on "Delete Song", match: :first
+    accept_alert "Are you sure?" do
+      click_on "Delete Song", match: :first
+    end
 
     assert_text "Song was successfully destroyed"
   end

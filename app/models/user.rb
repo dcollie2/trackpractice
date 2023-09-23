@@ -5,9 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :timeoutable,
          :trackable, :confirmable, :lockable
 
-  has_many :practices
-  has_many :foci, -> { order(short_description: :asc) }
-  has_many :songs, -> { order(title: :asc) }
+  has_many :practices, dependent: :destroy
+  has_many :foci, -> { order(short_description: :asc) }, dependent: :destroy
+  has_many :songs, -> { order(title: :asc) }, dependent: :destroy
 
   validates :time_zone, presence: true
 

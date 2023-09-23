@@ -29,7 +29,7 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to practices_url, notice: 'Practice was successfully created.' }
+        format.html { redirect_to practices_url, success: 'Practice was successfully created.' }
       else
         render :new, status: :unprocessable_entity
       end
@@ -70,11 +70,16 @@ class PracticesController < ApplicationController
       if current_user.admin?
         @focus_user = User.find(params[:user_id])
       else
-        @focus_user = User.with_public_practices.find(params[:user_id])
+        @focus_user = User.with_public_practices#.where(id: params[:user_id])
+        if @focus_user.blank?
+          flash[:alert] = "User not found."
+          redirect_to practices_url(@current_user)
+        else
+          @focus_user = @focus_user.first
+        end
       end
     end
-
-    @focus_user = current_user if @focus_user.nil?
+    @focus_user ||= current_user
   end
 
   # Use callbacks to share common setup or constraints between actions.

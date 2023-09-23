@@ -1,3 +1,4 @@
+require "test_helper"
 require "application_system_test_case"
 
 class FociTest < ApplicationSystemTestCase
@@ -33,7 +34,9 @@ class FociTest < ApplicationSystemTestCase
 
   test "should destroy Focus" do
     visit focus_url(@focus)
-    click_on "Delete Focus", match: :first
+    accept_alert "Are you sure?" do
+      click_on "Delete Focus", match: :first
+    end
 
     assert_text "Focus was successfully destroyed"
   end

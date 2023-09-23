@@ -11,6 +11,7 @@ admin:
   confirmed_at: <%= Time.current - 1.hour %>
   confirmation_sent_at: <%= Time.current - 2.hours %>
   time_zone: 'UTC'
+  admin: true
 
 testy:
   email: "test@test.test"

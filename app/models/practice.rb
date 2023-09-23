@@ -46,20 +46,6 @@ class Practice < ApplicationRecord
     a_dull_month(date).merge!(practice_days.to_h)
   end
 
-  # loop from the begnning of date's month to the end of date's month
-  # for each day, if the day is not in the practices hash, add it with 0 minutes
-  # if the day is in the practices hash, do nothing
-  # return the practices hash
-  def self.fill_in_missing_days(practices, date)
-    practice_hash = practices.group_by { |x| x.practice_day(@focus_user)}.collect { |d, p| [d, p.sum(&:minutes)]}.to_h
-    month_hash = {}
-    (date.beginning_of_month..date.end_of_month).each do |day|
-      current_day = day.strftime("%a, %d %b %Y")
-      new_hash.merge!(current_day => 0)
-    end
-    month_hash.merge!(practice_hash)
-  end
-
   def show_timer?
     new_record?
   end
