@@ -46,10 +46,16 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-# Use Sass to process CSS
 gem 'bootstrap'
+gem 'devise'
+gem 'dockerfile-rails', '>= 1.5', group: :development
+gem "hot_flash", "~> 1.1"
 gem 'popper_js'
+gem 'redis', '~> 5.0'
 gem 'sassc-rails'
+gem 'sentry-ruby', '~> 5.10'
+gem 'sentry-rails', '~> 5.10'
+gem 'sendgrid-ruby'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem 'image_processing', '~> 1.2'
@@ -65,28 +71,13 @@ group :development do
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem 'rack-mini-profiler'
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem 'spring'
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'webdrivers'
   gem 'simplecov', require: false
+  gem 'webdrivers'
 end
 
-gem 'dockerfile-rails', '>= 1.5', group: :development
-
-gem 'redis', '~> 5.0'
-
-gem 'sentry-ruby', '~> 5.10'
-
-gem 'sentry-rails', '~> 5.10'
-
-gem 'devise'
-gem 'sendgrid-ruby'
-
-gem "hot_flash", "~> 1.1"
