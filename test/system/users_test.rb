@@ -40,10 +40,10 @@ class UsersTest < ApplicationSystemTestCase
     assert_text 'User was successfully updated'
   end
 
-  test "non-admins who try to edit another user's profile will see their own edit page" do
+  test "non-admins who try to edit another user are told they cannot view that user" do
     sign_in @non_admin_user
     visit edit_user_url(@private_user)
-    assert_text @non_admin_user.email
+    assert_text "You cannot view that user"
   end
 
   test "non-admins visiting the user list should be able to click on a public user's email and see their practices" do

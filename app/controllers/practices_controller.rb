@@ -7,7 +7,12 @@ class PracticesController < ApplicationController
 
   # GET /practices or /practices.json
   def index
-    @practices = @focus_user.practices.in_week(@current_week).order(practice_date: :desc)
+    if @focus_user.present?
+      @practices = @focus_user.practices.in_week(@current_week).order(practice_date: :desc)
+    else
+      flash[:error] = "You cannot view that user's practices."
+      redirect_to practices_path
+    end
   end
 
   # GET /practices/1 or /practices/1.json
@@ -29,9 +34,11 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to practices_url, success: 'Practice was successfully created.' }
+        flash[:success] = "Practice was successfully created."
+        format.html { redirect_to practices_url }
       else
-        render :new, status: :unprocessable_entity
+        flash.now[:messages] = @practice.errors.full_messages[0]
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@practice, partial: "practices/form", locals: { practice: Practice.new } ) }
       end
     end
   end

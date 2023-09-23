@@ -19,7 +19,7 @@ class PracticesTest < ApplicationSystemTestCase
 
     fill_in "Minutes", with: '30'
     fill_in "Notes", with: 'these are notes'
-    fill_in "Practice date", with: DateTime.current.strftime('%d/%m/%Y')
+    fill_in "Practice date", with: '09/23/2023 12:30:00 PM'
     click_on "Create Practice"
     assert_text "Practice was successfully created"
   end
