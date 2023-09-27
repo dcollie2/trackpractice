@@ -114,4 +114,7 @@ module ApplicationHelper
     render partial: "shared/flash"
   end
 
+  def next_disabled(current_week)
+    'disabled' if current_week + 1.week > Date.current
+  end
 end
