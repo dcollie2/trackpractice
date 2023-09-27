@@ -17,6 +17,7 @@ class User < ApplicationRecord
   def streak
     # return the count of days practiced without a break
     streak = 0
+    return 0 if practices.blank?
 
     # get user's practies in descending order by practice_date
     user_practices = practices.order(practice_date: :desc)
@@ -24,7 +25,6 @@ class User < ApplicationRecord
     # we're starting either today or yesterday
     today = Time.now.in_time_zone(time_zone).to_date
     starting_date = user_practices.first.practice_date.in_time_zone(time_zone).to_date
-    logger.debug "today: #{today} - starting_date: #{starting_date}"
 
     # if practice is older than yesterday, return 0
     return 0 if starting_date < today - 1.day
@@ -41,18 +41,14 @@ class User < ApplicationRecord
       if index == 0 && starting_date >= today - 1.day
         # practiced on starting date
         streak += 1
-        Rails.logger.debug "streak: #{streak} - Today CONDITION"
       elsif index == 0 && practice_date == starting_date - 1.day
         # didn't practice on starting date but did day before
         streak += 1
-        Rails.logger.debug "streak: #{streak} - Yesterday CONDITION"
       elsif index > 0 && practice_date == starting_date - index.days
         # another consecuetive day
         streak += 1
-        Rails.logger.debug "streak: #{streak} - Continuing CONDITION"
       else
-        # broke the stres
-        Rails.logger.debug "streak: #{streak} - BREAKING - #{starting_date} != #{starting_date - index.days}"
+        # broke the streak
         break
       end
     end

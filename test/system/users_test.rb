@@ -69,8 +69,8 @@ class UsersTest < ApplicationSystemTestCase
 
     visit edit_user_path(@non_admin_user)
 
-    fill_in 'Email', with: 'newemail@example.com'
-    click_on 'Update'
+    select 'American Samoa', from: 'Time zone'
+    click_on 'Update User'
 
     assert_text 'User was successfuly updated'
     assert_equal 'newemail@example.com', @user.reload.email

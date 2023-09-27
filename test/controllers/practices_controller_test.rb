@@ -52,6 +52,27 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
+  test "set_current_week sets @current_week to current week when params[:week] is not present" do
+    sign_in @user
+    get practices_url
+
+    assert_equal Date.current.beginning_of_week, assigns(:current_week)
+  end
+
+  test "set_current_week sets @current_week to current week when params[:week] is invalid" do
+    sign_in @user
+    get practices_url, params: { week: "invalid date" }
+
+    assert_equal Date.current.beginning_of_week, assigns(:current_week)
+  end
+
+  test "set_current_week sets @current_week to params[:week] when it is a valid date" do
+    sign_in @user
+    get practices_url, params: { week: Date.current.to_s }
+
+    assert_equal Date.current.beginning_of_week, assigns(:current_week)
+  end
+
   # not really, since we're going single page
   # test "should show practice" do
   #   sign_in @user
