@@ -15,24 +15,34 @@
 
   </body>
   <header>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-      <div class="container d-flex justify-content-between">
-        <a href="/practices" class="navbar-brand d-flex align-items-center">
-          <strong><i class="bi bi-music-note"></i>Track Practice</strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/practices"><i class="bi bi-music-note"></i>Track Practice</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item"><a class="nav-link <%= active_state('practices') %>" href="/practices">Practices</a></li>
             <li class="nav-item"><a class="nav-link <%= active_state('foci') %>" href="/foci">Foci</a></li>
             <li class="nav-item"><a class="nav-link <%= active_state('songs') %>" href="/songs">Songs</a></li>
-            <% if user_signed_in? %>
-              <li class="nav-item"><%= button_to "logout", destroy_user_session_path, method: :delete, class: 'nav-link'  %></li>
-            <% end %>
+            <li class="nav-item"><a class="nav-link <%= active_state('users') %>" href="/users">Users</a></li>
+            <%# <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+              <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li> %>
           </ul>
+          <%# <form>
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+          </form> %>
         </div>
       </div>
-    </div>
+    </nav>
+
   </header>
 
   <main role="main">

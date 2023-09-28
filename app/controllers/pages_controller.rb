@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :set_page, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :home
 
   # GET /pages or /pages.json
   def index
@@ -8,9 +8,6 @@ class PagesController < ApplicationController
   end
 
   def home
-    if user_signed_in?
-      redirect_to practices_url
-    end
   end
 
   # GET /pages/1 or /pages/1.json

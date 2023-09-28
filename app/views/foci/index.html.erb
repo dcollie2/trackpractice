@@ -1,5 +1,8 @@
 <h1>Foci</h1>
 
+<p>What are you working on these days? Scales? Performance? Rocking out? The Zen of tuba mastery?</p>
+<p>Create a focus so you can track your work on that aspect of your practices.</p>
+
 <p><%= link_to "<i class='bi bi-music-note'></i> New Focus".html_safe, new_focus_path, data: { turbo_frame: "new_focus" }, class: 'btn btn-outline-primary', id: 'new-focus' %></p>
 
 <%= turbo_frame_tag "new_focus", target: "_top" %>
