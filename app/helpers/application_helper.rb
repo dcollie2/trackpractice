@@ -87,7 +87,7 @@ module ApplicationHelper
     else
       content_tag :div do
         concat content_tag :h2, field.to_s.titleize
-        concat content_tag :p, item.send(field)
+        concat content_tag :p, item.send(field).html_safe
       end
     end
   end

@@ -8,13 +8,13 @@
 <%= turbo_frame_tag "new_focus", target: "_top" %>
 
 <table class='table table-striped'>
-  <theader>
+  <thead class=thead-dark>
     <tr>
-      <th>Focus</th>
-      <th>This Week</th>
-      <th>Total</th>
+      <th scope="col">Focus</th>
+      <th scope="col">This Week</th>
+      <th scope="col">Total</th>
     </tr>
-  </theader>
+  </thead>
   <tbody>
     <%= render @foci %>
   </tbody>

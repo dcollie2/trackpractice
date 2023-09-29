@@ -7,9 +7,6 @@ class PagesController < ApplicationController
     @pages = Page.all
   end
 
-  def home
-  end
-
   # GET /pages/1 or /pages/1.json
   def show
   end

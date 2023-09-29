@@ -18,12 +18,12 @@
 
   <div>
     <%= form.label :lyrics, style: "display: block" %>
-    <%= form.text_area :lyrics %>
+    <%= form.text_area :lyrics, id: 'lyrics', class: 'wysiwyg', rows: 40, cols: 120 %>
   </div>
 
   <div>
     <%= form.label :chords, style: "display: block" %>
-    <%= form.text_area :chords %>
+    <%= form.text_area :chords, id: 'chords', class: 'wysiwyg', rows: 40, cols: 120 %>
   </div>
 
   <div>
