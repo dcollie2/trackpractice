@@ -2,6 +2,9 @@ class Song < ApplicationRecord
   belongs_to :user
   has_many :practices
 
+  has_rich_text :lyrics
+  has_rich_text :chords
+
   validates :title, presence: true
 
   # total practice time for this song

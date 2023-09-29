@@ -11,16 +11,16 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :short_description, style: "display: block" %>
-    <%= form.text_field :short_description %>
+  <div class='mb-3'>
+    <%= form.label :short_description, class: "form-label" %>
+    <%= form.text_field :short_description, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class='mb-3'>
     User: <%= @focus.user.email %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class='mb-3'>
+    <%= form.submit 'Update Focus', class: 'btn btn-primary' %>
   </div>
 <% end %>
