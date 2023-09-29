@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class='mb-3'>
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :lyrics, style: "display: block" %>
-    <%= form.text_area :lyrics, id: 'lyrics', class: 'wysiwyg', rows: 40, cols: 120 %>
+  <div class='mb-3'>
+    <%= form.check_box :shared, class: 'form-check-input' %>
+    <%= form.label :shared, class: 'form-check-label' %>
   </div>
 
-  <div>
-    <%= form.label :chords, style: "display: block" %>
-    <%= form.text_area :chords, id: 'chords', class: 'wysiwyg', rows: 40, cols: 120 %>
+  <div class='mb-3'>
+    <%= form.label :lyrics, class: 'form-label' %>
+    <%= form.rich_text_area :lyrics, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :shared, style: "display: block" %>
-    <%= form.check_box :shared %>
+  <div class='mb-3'>
+    <%= form.label :chords, class: 'form-label' %>
+    <%= form.rich_text_area :chords, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class='mb-3'>
+    <%= form.submit 'Update Song', class: 'btn btn-primary' %>
   </div>
 <% end %>

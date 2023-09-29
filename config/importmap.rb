@@ -8,3 +8,5 @@ pin 'bootstrap', to: 'bootstrap.min.js', preload: true
 pin 'trackpractice', to: 'trackpractice.js', preload: true
 pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
+pin "trix"
+pin "@rails/actiontext", to: "actiontext.js"
