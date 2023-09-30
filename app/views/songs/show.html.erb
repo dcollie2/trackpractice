@@ -1,5 +1,13 @@
 <div id="<%= dom_id @song %>">
+  <div class="d-flex justify-content-between align-items-center">
   <h1>Working on <%= @song.title %></h1>
+  <% if @song.user == current_user || current_user.admin? %>
+    <div class="btn-group" role="group" aria-label="Song actions">
+      <%= edit_button(@song) %>
+      <%= delete_button(@song) %>
+    </div>
+  <% end %>
+  </div>
   <p>
     <%= minutes_in_words(@song.practices.this_week_total) %> this week &mdash; <%= minutes_in_words(@song.total_practice_time) %> total
   </p>
@@ -8,14 +16,6 @@
 
 </div>
 
-<% if @song.user == current_user || current_user.admin? %>
-  <div>
-    <%= edit_button(@song) %>
-    <%= delete_button(@song) %>
-    <%= button_to "Delete Song", song_path(@song), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this song?" }, class: "btn btn-danger" %>
-
-  </div>
-<% end %>
 
 <% if @song.practices %>
   <h2>Practices</h2>

@@ -62,11 +62,11 @@ module ApplicationHelper
   def edit_button(item)
     link_to icon_text('bi', 'pencil-square', "Edit #{item_class_name(item)}"),
             edit_polymorphic_path(item),
-            class: 'btn btn-sm btn-primary'
+            class: 'btn btn-sm btn-primary ml-5'
   end
 
   def delete_button(item)
-    button_to icon_text('bi', 'trash3', "Delete #{item_class_name(item)}"), item, method: :delete, class: 'btn btn-sm btn-outline-danger', data: { turbo_confirm: 'Are you sure?' }
+    button_to icon_text('bi', 'trash3', "Delete #{item_class_name(item)}"), item, method: :delete, class: 'btn btn-sm btn-danger ml-5', data: { turbo_confirm: 'Are you sure?' }
   end
 
   def item_class_name(item)
