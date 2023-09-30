@@ -38,6 +38,7 @@ class SongsController < ApplicationController
     respond_to do |format|
       if @song.update(song_params)
         format.html { redirect_to song_url(@song), notice: "Song was successfully updated." }
+        format.turbo_stream { redirect_to song_url(@song), notice: "Song was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
