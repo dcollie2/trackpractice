@@ -1,0 +1,9 @@
+<%= turbo_stream.update "lyrics" do %>
+  <% if @song.lyrics.present? %>
+    <div class="row">
+      <%= render partial: 'songs/lyrics_and_chords', locals: { song: @song } %>
+    </div>
+  <% else %>
+    <p>No lyrics found for this song.</p>
+  <% end %>
+<% end %>

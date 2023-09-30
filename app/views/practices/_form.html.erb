@@ -36,9 +36,9 @@
         </div>
       <% end %>
       <% if current_user.songs.present? %>
-        <div class="col-md-6">
-          <%= form.label :song_id, class: 'form-label' %>
-          <%= form.select :song_id, current_user.songs.order(:title).map { |t| [t.title, t.id]}, { include_blank: "Choose a song for this practice if you wish" }, class: "form-control" %>
+        <div class="col-md-6" data-controller="song">
+          <%= form.label :song, class: 'form-label' %>
+          <%= form.select :song, current_user.songs.order(:title).map { |t| [t.title, t.id]}, { include_blank: "Choose a song for this practice if you wish" }, { class: 'form-select', data: { action: 'change->song#change' } } %>
         </div>
       <% end %>
     </div>
@@ -56,49 +56,55 @@
     </div>
   </div>
 
-  <% if @practice.new_record? %>
-    <script type='application/javascript'>
-      let start = Date.now();
-      let end = Date.now();
+  <div class="mb-3">
+    <turbo-frame id="lyrics">
+      <% if @song.present? && @song.lyrics.present? %>
+        <%= simple_format @practice.song.lyrics %>
+      <% end %>
+    </turbo-frame>
+  </div>
 
-      let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
-      let timerRef = document.querySelector('.timerDisplay');
-      let int = null;
-      let minutesRef = document.getElementById('practice_minutes');
-      document.getElementById('startTimer').addEventListener('click', ()=>{
-          if(int!==null){
-              clearInterval(int);
-          }
-          int = setInterval(displayTimer,10);
-      });
-      document.getElementById('pauseTimer').addEventListener('click', ()=>{
-          clearInterval(int);
-      });
-      document.getElementById('resetTimer').addEventListener('click', ()=>{
-          clearInterval(int);
-          [milliseconds,seconds,minutes,hours] = [0,0,0,0];
-          timerRef.innerHTML = '00 : 00 : 00 : 000 ';
-          minutesRef.value = 0;
-      });
+  <script type='application/javascript'>
+    let start = Date.now();
+    let end = Date.now();
 
-      // calculate time elapsed since start's time. Return in minutes and set hours, minutes, seconds, and milliseconds
-      function displayTimer(){
-        end = Date.now();
-        let elapsed = end - start;
-        let elapsedMinutes = Math.floor(elapsed / 60000);
-        hours = Math.floor(elapsedMinutes / 60);
-        minutes = elapsedMinutes % 60;
-        seconds = Math.floor((elapsed % 60000) / 1000);
-        milliseconds = elapsed % 1000;
-        // show hours, minutes, and seconds as two digits
-        hours = hours.toString().padStart(2, '0');
-        minutes = minutes.toString().padStart(2, '0');
-        seconds = seconds.toString().padStart(2, '0');
-        // show milliseconds as three digits
-        milliseconds = milliseconds.toString().padStart(3, '0');
-        timerRef.innerHTML = ` ${hours} : ${minutes} : ${seconds} : ${milliseconds}`;
-        minutesRef.value = elapsedMinutes;
-      }
-    </script>
-  <% end %>
+    let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
+    let timerRef = document.querySelector('.timerDisplay');
+    let int = null;
+    let minutesRef = document.getElementById('practice_minutes');
+    document.getElementById('startTimer').addEventListener('click', ()=>{
+        if(int!==null){
+            clearInterval(int);
+        }
+        int = setInterval(displayTimer,10);
+    });
+    document.getElementById('pauseTimer').addEventListener('click', ()=>{
+        clearInterval(int);
+    });
+    document.getElementById('resetTimer').addEventListener('click', ()=>{
+        clearInterval(int);
+        [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+        timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+        minutesRef.value = 0;
+    });
+
+    // calculate time elapsed since start's time. Return in minutes and set hours, minutes, seconds, and milliseconds
+    function displayTimer(){
+      end = Date.now();
+      let elapsed = end - start;
+      let elapsedMinutes = Math.floor(elapsed / 60000);
+      hours = Math.floor(elapsedMinutes / 60);
+      minutes = elapsedMinutes % 60;
+      seconds = Math.floor((elapsed % 60000) / 1000);
+      milliseconds = elapsed % 1000;
+      // show hours, minutes, and seconds as two digits
+      hours = hours.toString().padStart(2, '0');
+      minutes = minutes.toString().padStart(2, '0');
+      seconds = seconds.toString().padStart(2, '0');
+      // show milliseconds as three digits
+      milliseconds = milliseconds.toString().padStart(3, '0');
+      timerRef.innerHTML = ` ${hours} : ${minutes} : ${seconds} : ${milliseconds}`;
+      minutesRef.value = elapsedMinutes;
+    }
+  </script>
 <% end %>

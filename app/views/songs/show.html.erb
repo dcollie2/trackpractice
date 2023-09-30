@@ -11,11 +11,8 @@
   <p>
     <%= minutes_in_words(@song.practices.this_week_total) %> this week &mdash; <%= minutes_in_words(@song.total_practice_time) %> total
   </p>
-
   <%= content_tag :p, 'Shared with other users.' if @song.shared %>
-
 </div>
-
 
 <% if @song.practices %>
   <h2>Practices</h2>
@@ -41,11 +38,4 @@
   </table>
 <% end%>
 
-<div class="row">
-  <div class="col-md-6">
-    <%= display_field(@song, :lyrics) %>
-  </div>
-  <div class="col-md-6">
-    <%= display_field(@song, :chords) %>
-  </div>
-</div>
+<%= render partial: 'lyrics_and_chords', locals: { song: @song } %>
