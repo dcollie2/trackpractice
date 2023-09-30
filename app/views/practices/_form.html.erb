@@ -37,8 +37,8 @@
       <% end %>
       <% if current_user.songs.present? %>
         <div class="col-md-6" data-controller="song">
-          <%= form.label :song, class: 'form-label' %>
-          <%= form.select :song, current_user.songs.order(:title).map { |t| [t.title, t.id]}, { include_blank: "Choose a song for this practice if you wish" }, { class: 'form-select', data: { action: 'change->song#change' } } %>
+          <%= form.label :song_id, class: 'form-label' %>
+          <%= form.select :song_id, current_user.songs.order(:title).map { |t| [t.title, t.id]}, { include_blank: "Choose a song for this practice if you wish" }, { class: 'form-select', data: { action: 'change->song#change' } } %>
         </div>
       <% end %>
     </div>
