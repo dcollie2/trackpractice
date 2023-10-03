@@ -2,9 +2,11 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import 'bootstrap'
-import './popper'
+import 'popper'
 import 'trackpractice'
 import "chartkick"
 import "Chart.bundle"
 
+import "@rails/actiontext"
+import "trix"
 import "@rails/actiontext"
