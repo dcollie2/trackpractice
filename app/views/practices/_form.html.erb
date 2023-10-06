@@ -1,16 +1,24 @@
 <%= form_with(model: @practice, class: 'card') do |form| %>
-  <div class="card-body">
+  <div class="card-body" data-controller="timer">
     <!-- Stopwatch -->
     <% if @practice.new_record? %>
+
       <div id="stopwatch" class="bg-primary rounded mb-3">
-        <div class="timerDisplay text-light bg-dark p-2 rounded text-monospace fs-1">
-          00 : <%= @practice.minutes.to_s.rjust(2, '0') %> : 00 : 000
+        <div class="timerDisplay text-light bg-dark p-2 rounded text-monospace fs-1" data-timer-target='display'>
+          00 : 00 : 00 : 000
         </div>
-        <div class="buttons text-center p-1 bg-secondary">
-          <button id="pauseTimer" class="btn btn-success me-2" type="button"><i class="bi bi-pause-circle"></i> Pause</button>
-          <button id="startTimer" class="btn btn-primary me-2" type="button"><i class="bi bi-play-circle-fill"></i> Start</button>
-          <button id="resetTimer" class="btn btn-danger" type="button"><i class="bi bi-x-circle"></i> Reset</button>
+        <div class="d-flex justify-content-center" aria-label="Timer controls">
+          <button type="button" class="btn btn-primary me-2" data-action="timer#startTimer" data-timer-target="startButton"><i class="bi bi-play-circle-fill"></i> Start</button>
+          <button type="button" class="btn btn-primary me-2" data-action="timer#resumeTimer" data-timer-target="resumeButton"><i class="bi bi-play-circle-fill"></i> Resume</button>
+          <button type="button" class="btn btn-secondary me-2" data-action="timer#pauseTimer" data-timer-target="pauseButton"><i class="bi bi-pause-circle"></i> Pause</button>
+          <button type="button" class="btn btn-danger"  data-action="timer#resetTimer" data-timer-target="resetButton"><i class="bi bi-x-circle"></i> Reset</button>
         </div>
+        <p class="text-warning">The restart button currently malfunctions, so don't use it. You can still pause to edit the minutes before submitting.</p>
+        <%# <div class="timerControls buttons text-center p-1 bg-secondary">
+          <button type="button" id="startTimer" class="btn btn-primary me-2" type="button" data-action="click->timer#startTimer"><i class="bi bi-play-circle-fill"></i> Start</button>
+          <button type="button" id="pauseTimer" class="btn btn-success me-2 hidden d-none" type="button">Pause</button>
+          <button type="button" id="resetTimer" class="btn btn-danger" type="button">Reset</button>
+        </div> %>
       </div>
     <% end %>
 
@@ -22,7 +30,7 @@
       </div>
       <div class="col-md-6">
         <%= form.label :minutes, class: "form-label" %>
-        <%= form.number_field :minutes, class: 'form-control' %>
+        <%= form.number_field :minutes, class: 'form-control', data: { 'timer-target': 'minutes' } %>
       </div>
     </div>
 
@@ -61,32 +69,20 @@
     </turbo-frame>
   </div>
 
-  <script type='application/javascript'>
+<script type='application/javascript'>
+  console.log('practices/_form.js')
+
+  function startTimer() {
+    console.log('startTimer');
     let start = Date.now();
     let end = Date.now();
 
-    let [milliseconds,seconds,minutes,hours] = [0,0,<%= @practice.minutes %>,0];
+    let [milliseconds, seconds, minutes, hours] = [0, 0, <%= @practice.minutes %>, 0];
     let timerRef = document.querySelector('.timerDisplay');
     let int = null;
     let minutesRef = document.getElementById('practice_minutes');
-    document.getElementById('startTimer').addEventListener('click', ()=>{
-        if(int!==null){
-            clearInterval(int);
-        }
-        int = setInterval(displayTimer,10);
-    });
-    document.getElementById('pauseTimer').addEventListener('click', ()=>{
-        clearInterval(int);
-    });
-    document.getElementById('resetTimer').addEventListener('click', ()=>{
-        clearInterval(int);
-        [milliseconds,seconds,minutes,hours] = [0,0,0,0];
-        timerRef.innerHTML = '00 : 00 : 00 : 000 ';
-        minutesRef.value = 0;
-    });
 
-    // calculate time elapsed since start's time. Return in minutes and set hours, minutes, seconds, and milliseconds
-    function displayTimer(){
+    function displayTimer() {
       end = Date.now();
       let elapsed = end - start;
       let elapsedMinutes = Math.floor(elapsed / 60000);
@@ -103,5 +99,55 @@
       timerRef.innerHTML = ` ${hours} : ${minutes} : ${seconds} : ${milliseconds}`;
       minutesRef.value = elapsedMinutes;
     }
-  </script>
+
+    int = setInterval(displayTimer, 10);
+
+    return int;
+  }
+
+  function stopTimer(int) {
+    clearInterval(int);
+  }
+
+  function resetTimer() {
+    let [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0];
+    let timerRef = document.querySelector('.timerDisplay');
+    let minutesRef = document.getElementById('practice_minutes');
+    timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+    minutesRef.value = 0;
+  }
+
+  document.addEventListener('turbo:DOMContentLoaded', () => {
+    let int = startTimer();
+    console.log('turbo:load');
+
+    let startButton = document.getElementById('startTimer');
+    if (startButton) {
+      console.log('startButton');
+      startButton.addEventListener('click', () => {
+        int = startTimer();
+      });
+    }
+
+    let pauseButton = document.getElementById('pauseTimer');
+    if (pauseButton) {
+      console.log('pauseButton');
+      pauseButton.addEventListener('click', () => {
+        stopTimer(int);
+      });
+    }
+
+    let resetButton = document.getElementById('resetTimer');
+    if (resetButton) {
+      console.log('resetButton');
+      resetButton.addEventListener('click', () => {
+        stopTimer(int);
+        resetTimer();
+      });
+    }
+    else {
+      console.log('no resetButton');}
+  });
+</script>
+
 <% end %>
