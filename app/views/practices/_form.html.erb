@@ -60,7 +60,8 @@
     <!-- Submit and cancel buttons -->
     <div class="d-flex justify-content-end">
       <%= form.submit class: "btn btn-info btn-lg me-2" %>
-      <%= link_to "Cancel", practice_path(@practice), class: "btn btn-secondary btn-lg", data: { turbo: 'cancel' } %>
+      <%= link_to "Cancel", practice_path(@practice), class: "btn btn-secondary btn-lg", data: { turbo: 'cancel' } unless @practice.new_record? %>
+      <%= link_to "Cancel", practices_path, class: "btn btn-secondary btn-lg", data: { turbo: 'cancel' } if @practice.new_record? %>
     </div>
   </div>
 
