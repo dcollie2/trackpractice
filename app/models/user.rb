@@ -11,8 +11,16 @@ class User < ApplicationRecord
 
   validates :time_zone, presence: true
 
+  after_create :create_default_foci
+
   # add a public scope
   scope :with_public_practices, -> { where(make_practices_public: true) }
+
+  def create_default_foci
+    Focus::STOCK_FOCI.each do |focus|
+      foci.create(short_description: focus)
+    end
+  end
 
   def streak
     # return the count of days practiced without a break
