@@ -7,6 +7,7 @@
   <td><%= user.confirmed_at %></td>
   <td><%= edit_button(user) if user == current_user || current_user.admin? %></td>
   <% if current_user.admin? %>
+    <td><%= user.make_practices_public %></td>
     <td><%= user.admin? %></td>
     <td><%= delete_button(user) if current_user.admin? %></td>
   <% end %>
