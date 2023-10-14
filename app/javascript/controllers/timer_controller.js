@@ -5,14 +5,11 @@ export default class extends Controller {
 
   connect() {
     this.startTime = null;
+    this.pauseTime = null;
     this.elapsedTime = 0;
     this.startButtonTarget.classList.remove('d-none');
     this.pauseButtonTarget.classList.add('d-none');
     this.resumeButtonTarget.classList.add('d-none');
-    this.startButtonTarget.addEventListener('click', this.startTimer.bind(this));
-    this.pauseButtonTarget.addEventListener('click', this.pauseTimer.bind(this));
-    this.resumeButtonTarget.addEventListener('click', this.resumeTimer.bind(this));
-    this.resetButtonTarget.addEventListener('click', this.resetTimer.bind(this));
   }
 
   startTimer() {
@@ -38,9 +35,13 @@ export default class extends Controller {
         this.minutesTarget.value = elapsedMinutes;
       }
     };
-    this.startTime = Date.now();
     int = setInterval(displayTimer, 10);
     this.int = int;
+  }
+
+  initialTimerStart() {
+    this.startTime = Date.now();
+    this.startTimer();
     this.minutesTarget.disabled = true;
     this.startButtonTarget.classList.add('d-none');
     this.pauseButtonTarget.classList.remove('d-none');
@@ -50,6 +51,7 @@ export default class extends Controller {
   pauseTimer() {
     clearInterval(this.int);
     this.paused = true;
+    this.pauseTime = Date.now();
     this.minutesTarget.disabled = false;
     this.startButtonTarget.classList.add('d-none');
     this.pauseButtonTarget.classList.add('d-none');
@@ -57,9 +59,13 @@ export default class extends Controller {
     }
 
   resumeTimer() {
-    this.startTime = Date.now() - this.elapsedTime;
+    let elapsedPauseTime = Date.now() - this.pauseTime;
+    this.startTime += elapsedPauseTime;
     this.paused = false;
+    this.pauseTime = null;
     this.minutesTarget.disabled = true;
+    this.pauseButtonTarget.classList.remove('d-none');
+    this.resumeButtonTarget.classList.add('d-none');
     this.startTimer();
     }
 
