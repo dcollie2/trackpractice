@@ -1,17 +1,20 @@
 <div id="<%= dom_id @focus %>">
+  <div class="d-flex justify-content-between align-items-center">
+
   <h1>Focusing on <%= @focus.short_description %></h1>
+      <% if @focus.user == current_user || current_user.admin? %>
+        <div class="btn-group" role="group" aria-label="Focus actions">
+          <%= edit_button(@focus) %>
+          <%= delete_button(@focus) %>
+        </div>
+      <% end %>
+  </div>
+
   <p>
     <%= minutes_in_words(@focus.practices.this_week_total) %> this week &mdash; <%= minutes_in_words(@focus.total_practice_time) %> total
   </p>
 
 </div>
-
-<% if @focus.user == current_user || current_user.admin? %>
-  <div>
-    <%= edit_button(@focus) %>
-    <%= delete_button(@focus) %>
-  </div>
-<% end %>
 
 <% if @focus.practices %>
   <h2>Practices</h2>
