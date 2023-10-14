@@ -62,7 +62,7 @@
   <%= link_to "<i class='bi bi-chevron-left'></i> Previous week".html_safe, "?week=#{@current_week - 1.week}",
               class: 'btn btn-secondary' %>
   <%= link_to "<i class='bi bi-music-note'></i> New practice".html_safe, new_practice_path,
-              data: { turbo_frame: "new_practice" }, class: 'btn btn-primary' if @focus_user == current_user %>
+              data: { turbo_frame: "new_practice" }, id: 'new-practice-button', class: 'btn btn-primary' if @focus_user == current_user %>
   <%= link_to "Next week <i class='bi bi-chevron-right'></i>".html_safe, "?week=#{@current_week + 1.week}",
               class: "btn btn-secondary #{next_disabled(@current_week)}" %>
 </div>
