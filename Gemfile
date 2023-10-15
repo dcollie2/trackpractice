@@ -61,12 +61,12 @@ gem 'sendgrid-ruby'
 # gem 'image_processing', '~> 1.2'
 
 group :development, :test do
+  gem 'brakeman'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
-  gem 'brakeman'
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem 'rack-mini-profiler'
   # Use console on exceptions pages [https://github.com/rails/web-console]
@@ -81,4 +81,3 @@ group :test do
   gem 'simplecov', require: false
   gem 'webdrivers'
 end
-
