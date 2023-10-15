@@ -25,6 +25,14 @@ class SongsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to song_url(Song.last)
   end
 
+  test "should not create song with invalid params" do
+    assert_no_difference("Song.count") do
+      post songs_url, params: { song: { title: "", artist: "" } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test "should show song" do
     get song_url(@song)
     assert_response :success
@@ -38,6 +46,11 @@ class SongsControllerTest < ActionDispatch::IntegrationTest
   test "should update song" do
     patch song_url(@song), params: { song: { chords: @song.chords, lyrics: @song.lyrics, shared: @song.shared, title: @song.title, user_id: @song.user_id } }
     assert_redirected_to song_url(@song)
+  end
+
+  test "should fail to update song with invalid parameters" do
+    patch song_url(@song), params: { song: { title: "", artist: "" } }
+    assert_response :unprocessable_entity
   end
 
   test "should destroy song" do

@@ -42,9 +42,15 @@ class PracticesTest < ApplicationSystemTestCase
     accept_alert "Are you sure you want to delete this practice?" do
       click_on "Delete", match: :first
     end
-
-
     assert_text "Practice was successfully destroyed"
-
   end
+
+  test "non-admins cannot see non-public users' practices" do
+    private_user = users(:private)
+
+    visit user_practices_path(private_user)
+
+    assert_text "User not found"
+  end
+
 end

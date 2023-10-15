@@ -16,11 +16,10 @@ class SongsTest < ApplicationSystemTestCase
     visit songs_url
     click_on "New Song"
 
-    fill_in "Chords", with: @song.chords
-    fill_in "Lyrics", with: @song.lyrics
-    check "Shared" if @song.shared
-    fill_in "Title", with: @song.title
-    click_on "Create Song"
+    fill_in "Title", with: 'title'
+    fill_in_rich_text_area "Chords", with: 'chords'
+    fill_in_rich_text_area "Lyrics", with: 'lyrics'
+    click_on "Update Song"
 
     assert_text "Song was successfully created"
   end
@@ -29,8 +28,8 @@ class SongsTest < ApplicationSystemTestCase
     visit song_url(@song)
     click_on "Edit Song", match: :first
 
-    fill_in "Chords", with: @song.chords
-    fill_in "Lyrics", with: @song.lyrics
+    fill_in_rich_text_area "Chords", with: @song.chords
+    fill_in_rich_text_area "Lyrics", with: @song.lyrics
     check "Shared" if @song.shared
     fill_in "Title", with: @song.title
     click_on "Update Song"

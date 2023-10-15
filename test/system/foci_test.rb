@@ -17,7 +17,7 @@ class FociTest < ApplicationSystemTestCase
     click_on "New Focus"
 
     fill_in "Short description", with: @focus.short_description
-    click_on "Create Focus"
+    click_on "Update Focus"
 
     assert_text "Focus was successfully created"
   end

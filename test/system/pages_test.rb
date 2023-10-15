@@ -20,7 +20,7 @@ class PagesTest < ApplicationSystemTestCase
   test 'visiting home shows non-logged-in user the home page' do
     logout
     visit root_url
-    assert_text 'Login or Create Account'
+    assert_text 'Log In or Create Account'
   end
 
   test "should create page" do
