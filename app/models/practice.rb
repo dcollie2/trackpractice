@@ -36,7 +36,8 @@ class Practice < ApplicationRecord
     # create a hash for each day of the date's month
     # add each day as the key
     # add 0 as the value
-    (date.beginning_of_month..date.end_of_month).each_with_object({}) do |day, hash|
+    month_end = date.month == Time.zone.now.month ? Time.zone.now : date.end_of_month
+    (date.beginning_of_month..month_end).each_with_object({}) do |day, hash|
       hash[day.strftime("%a, %d %b %Y")] = 0
     end
   end
