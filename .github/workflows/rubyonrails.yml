@@ -52,9 +52,18 @@ jobs:
         with:
           bundler-cache: true
       # Add or replace any other lints here
-      - name: Security audit dependencies
-        run: bundler-audit --update
+      - name: bundler_audit
+        uses: tomferreira/action-bundler-audit@v1
+        with:
+          bundler_audit_version: gemfile
+          # Change reviewdog reporter if you need [github-check,github-pr-review,github-pr-check].
+          reporter: github-pr-review
       - name: Security audit application code
-        run: brakeman -q -w2
-      - name: Lint Ruby files
-        run: bin/rubocop --parallel
+        uses: artplan1/brakeman-action@v1.2.1
+        with:
+          flags: --color
+      - name: rubocop
+        uses: reviewdog/action-rubocop@v2
+        with:
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
