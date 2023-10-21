@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 HotFlash.configure do |config|
   # ==> Turbo Target
   # config.turbo_target = "#flashes"

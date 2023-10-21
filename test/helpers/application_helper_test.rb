@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
@@ -50,5 +52,4 @@ class ApplicationHelperTest < ActionView::TestCase
   test 'flash_class returns alert-primary for info' do
     assert_equal 'alert alert-primary alert-dismissable fade show', flash_class('info')
   end
-
 end

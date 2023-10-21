@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :omniauthable
@@ -42,17 +44,17 @@ class User < ApplicationRecord
     # for each practice_date.to_date, if the next practice_date.to_date is the day after, increment the streak
     # if the next practice_date.to_date is not the day after, break the loop
     # return the streak
-    user_practices.group_by { |p| p.practice_day(time_zone) }.each_with_index do |(date, practices), index|
+    user_practices.group_by { |p| p.practice_day(time_zone) }.each_with_index do |(date, _practices), index|
       practice_date = date.in_time_zone(time_zone).to_date
       Rails.logger.debug "practice_date: #{starting_date} - today: #{today} - index: #{index}"
 
-      if index == 0 && starting_date >= today - 1.day
+      if index.zero? && starting_date >= today - 1.day
         # practiced on starting date
         streak += 1
-      elsif index == 0 && practice_date == starting_date - 1.day
+      elsif index.zero? && practice_date == starting_date - 1.day
         # didn't practice on starting date but did day before
         streak += 1
-      elsif index > 0 && practice_date == starting_date - index.days
+      elsif index.positive? && practice_date == starting_date - index.days
         # another consecuetive day
         streak += 1
       else

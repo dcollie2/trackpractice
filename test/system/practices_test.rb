@@ -1,5 +1,7 @@
-require "test_helper"
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'test_helper'
+require 'application_system_test_case'
 
 class PracticesTest < ApplicationSystemTestCase
   setup do
@@ -8,41 +10,41 @@ class PracticesTest < ApplicationSystemTestCase
     login_as @practice.user
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit practices_url
-    assert_selector "h1", text: "Week of #{DateTime.current.beginning_of_week.strftime('%B %-d, %Y')}"
+    assert_selector 'h1', text: "Week of #{DateTime.current.beginning_of_week.strftime('%B %-d, %Y')}"
   end
 
-  test "should create practice" do
+  test 'should create practice' do
     visit practices_url
-    click_on "New practice"
+    click_on 'New practice'
 
-    fill_in "Minutes", with: '30'
-    fill_in "Notes", with: 'these are notes'
-    fill_in "Practice date", with: '09/23/2023 12:30:00 PM'
-    click_on "Create Practice"
-    assert_text "Practice was successfully created"
+    fill_in 'Minutes', with: '30'
+    fill_in 'Notes', with: 'these are notes'
+    fill_in 'Practice date', with: '09/23/2023 12:30:00 PM'
+    click_on 'Create Practice'
+    assert_text 'Practice was successfully created'
   end
 
-  test "should update Practice" do
+  test 'should update Practice' do
     @practice.save
     visit practices_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    fill_in "Minutes", with: 5
-    fill_in "Notes", with: @practice.notes
+    fill_in 'Minutes', with: 5
+    fill_in 'Notes', with: @practice.notes
 
-    click_on "Update Practice"
+    click_on 'Update Practice'
 
-    assert_text "Practice was successfully updated"
+    assert_text 'Practice was successfully updated'
   end
 
-  test "should destroy Practice" do
+  test 'should destroy Practice' do
     visit practices_url
-    accept_alert "Are you sure you want to delete this practice?" do
-      click_on "Delete", match: :first
+    accept_alert 'Are you sure you want to delete this practice?' do
+      click_on 'Delete', match: :first
     end
-    assert_text "Practice was successfully destroyed"
+    assert_text 'Practice was successfully destroyed'
   end
 
   test "non-admins cannot see non-public users' practices" do
@@ -50,7 +52,6 @@ class PracticesTest < ApplicationSystemTestCase
 
     visit user_practices_path(private_user)
 
-    assert_text "User not found"
+    assert_text 'User not found'
   end
-
 end

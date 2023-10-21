@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class Focus < ApplicationRecord
-  STOCK_FOCI = ['Learning Song','CAGED','Major Scales','Minor Scales','Major Pentatonics','Minor Pentatonics','Performance','Recording Song','Learning Song'].freeze
+  STOCK_FOCI = ['Learning Song', 'CAGED', 'Major Scales', 'Minor Scales', 'Major Pentatonics', 'Minor Pentatonics',
+                'Performance', 'Recording Song', 'Learning Song'].freeze
 
   belongs_to :user
   has_many :practices

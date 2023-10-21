@@ -1,28 +1,31 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class PracticesControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     @practice = practices(:one)
     @user = users(:testy)
   end
 
-  test "should get index" do
+  test 'should get index' do
     sign_in @user
     get practices_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     sign_in @user
     get new_practice_url
     assert_response :success
   end
 
-  test "should create practice" do
+  test 'should create practice' do
     sign_in @user
-    assert_difference("Practice.count") do
-      post practices_url, params: { practice: { minutes: @practice.minutes, notes: @practice.notes, practice_date: @practice.practice_date } }
+    assert_difference('Practice.count') do
+      post practices_url,
+           params: { practice: { minutes: @practice.minutes, notes: @practice.notes,
+                                 practice_date: @practice.practice_date } }
     end
 
     assert_redirected_to practices_url
@@ -36,7 +39,7 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
   #   assert_match /<form class="new_practice" id="new_practice" action="\/practices" accept-charset="UTF-8" data-remote="true" method="post">/m, @response.body
   # end
 
-  test "should set focus user if that user is public" do
+  test 'should set focus user if that user is public' do
     another_user = users(:another_user)
     another_user.update!(make_practices_public: true)
     sign_in @user
@@ -45,28 +48,28 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include?(another_user.email)
   end
 
-  test "should not set focus user if that user is not public" do
+  test 'should not set focus user if that user is not public' do
     another_user = users(:another_user)
     sign_in @user
     get practices_url, params: { user_id: another_user.id }
     assert_response :redirect
   end
 
-  test "set_current_week sets @current_week to current week when params[:week] is not present" do
+  test 'set_current_week sets @current_week to current week when params[:week] is not present' do
     sign_in @user
     get practices_url
 
     assert_equal Date.current.beginning_of_week, assigns(:current_week)
   end
 
-  test "set_current_week sets @current_week to current week when params[:week] is invalid" do
+  test 'set_current_week sets @current_week to current week when params[:week] is invalid' do
     sign_in @user
-    get practices_url, params: { week: "invalid date" }
+    get practices_url, params: { week: 'invalid date' }
 
     assert_equal Date.current.beginning_of_week, assigns(:current_week)
   end
 
-  test "set_current_week sets @current_week to params[:week] when it is a valid date" do
+  test 'set_current_week sets @current_week to params[:week] when it is a valid date' do
     sign_in @user
     get practices_url, params: { week: Date.current.to_s }
 

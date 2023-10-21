@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class SongsController < ApplicationController
-  before_action :set_song, only: %i[ show edit update destroy ]
+  before_action :set_song, only: %i[show edit update destroy]
 
   # GET /songs or /songs.json
   def index
@@ -7,8 +9,7 @@ class SongsController < ApplicationController
   end
 
   # GET /songs/1 or /songs/1.json
-  def show
-  end
+  def show; end
 
   # GET /songs/new
   def new
@@ -16,8 +17,7 @@ class SongsController < ApplicationController
   end
 
   # GET /songs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /songs or /songs.json
   def create
@@ -26,7 +26,7 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       if @song.save
-        format.html { redirect_to song_url(@song), notice: "Song was successfully created." }
+        format.html { redirect_to song_url(@song), notice: 'Song was successfully created.' }
       else
         format.html { redirect_to new_song_path, status: :unprocessable_entity }
       end
@@ -37,9 +37,11 @@ class SongsController < ApplicationController
   def update
     respond_to do |format|
       if @song.update(song_params)
-        format.html { redirect_to song_url(@song), notice: "Song was successfully updated." }
+        format.html { redirect_to song_url(@song), notice: 'Song was successfully updated.' }
       else
-        format.html { redirect_to edit_song_path(@song), status: :unprocessable_entity, notice: "Song was not successfully updated." }
+        format.html do
+          redirect_to edit_song_path(@song), status: :unprocessable_entity, notice: 'Song was not successfully updated.'
+        end
       end
     end
   end
@@ -49,20 +51,21 @@ class SongsController < ApplicationController
     @song.destroy
 
     respond_to do |format|
-      flash[:notice] = "Song was successfully destroyed."
-      format.html { redirect_to songs_url, notice: "Song was successfully destroyed." }
-      format.turbo_stream { redirect_to songs_url, notice: "Song was successfully destroyed." }
+      flash[:notice] = 'Song was successfully destroyed.'
+      format.html { redirect_to songs_url, notice: 'Song was successfully destroyed.' }
+      format.turbo_stream { redirect_to songs_url, notice: 'Song was successfully destroyed.' }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_song
-      @song = current_user.songs.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def song_params
-      params.require(:song).permit(:title, :lyrics, :chords, :shared, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_song
+    @song = current_user.songs.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def song_params
+    params.require(:song).permit(:title, :lyrics, :chords, :shared, :user_id)
+  end
 end

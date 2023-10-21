@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Practice < ApplicationRecord
   belongs_to :user
   belongs_to :focus, optional: true
   belongs_to :song, optional: true
   validates :minutes, presence: true, numericality: { greater_than: 0 }
-  validates :practice_date, presence: true #, timeliness: { type: :date }
+  validates :practice_date, presence: true # , timeliness: { type: :date }
   validates :user, presence: true
   validates :notes, length: { maximum: 1000 }
 
@@ -11,25 +13,31 @@ class Practice < ApplicationRecord
   scope :this_week, -> { where(practice_date: 1.week.ago.beginning_of_day..Time.now.end_of_day) }
 
   # given a date, return practices for that date's month and year
-  scope :this_month, ->(date) { where(practice_date: date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day) }
+  scope :this_month, lambda { |date|
+                       where(practice_date: date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day)
+                     }
 
   # get all practices for this week, grouped by day, and sum the minutes for each day
-  scope :this_week_grouped, -> { this_week.select("to_char(DATE(practice_date), 'Day')").group("to_char(DATE(practice_date), 'Day')").sum(:minutes) }
+  scope :this_week_grouped, lambda {
+                              this_week.select("to_char(DATE(practice_date), 'Day')").group("to_char(DATE(practice_date), 'Day')").sum(:minutes)
+                            }
   # get total sum of minutes for this week
   scope :this_week_total, -> { this_week.sum(:minutes) }
 
   # get all practicds grouped by practice date without time, and sum the minutes for each day
-  scope :grouped_by_day, -> { select("DATE(practice_date)").group("DATE(practice_date)").sum(:minutes) }
+  scope :grouped_by_day, -> { select('DATE(practice_date)').group('DATE(practice_date)').sum(:minutes) }
 
   # get earliest practice_date
   scope :first_practice_date, -> { order(:practice_date).first.practice_date }
 
-  scope :in_week, ->(date) { where(practice_date: date.beginning_of_week.beginning_of_day..(date + 1.week).beginning_of_day) }
+  scope :in_week, lambda { |date|
+                    where(practice_date: date.beginning_of_week.beginning_of_day..(date + 1.week).beginning_of_day)
+                  }
 
   scope :on_date, ->(date) { where(practice_date: date.beginning_of_day..date.end_of_day) }
 
   def practice_day(focus_user)
-    practice_date.in_time_zone(focus_user).strftime("%a, %d %b %Y")
+    practice_date.in_time_zone(focus_user).strftime('%a, %d %b %Y')
   end
 
   def self.a_dull_month(date)
@@ -38,17 +46,18 @@ class Practice < ApplicationRecord
     # add 0 as the value
     month_end = date.month == Time.zone.now.month ? Time.zone.now : date.end_of_month
     (date.beginning_of_month..month_end).each_with_object({}) do |day, hash|
-      hash[day.strftime("%a, %d %b %Y")] = 0
+      hash[day.strftime('%a, %d %b %Y')] = 0
     end
   end
 
   def self.month_of_practices(date, focus_user)
-    practice_days = focus_user.practices.this_month(date).group_by { |practice| practice.practice_day(focus_user.time_zone) }.collect { |p, ps| [p, ps.sum(&:minutes)] }
+    practice_days = focus_user.practices.this_month(date).group_by do |practice|
+                      practice.practice_day(focus_user.time_zone)
+                    end.collect { |p, ps| [p, ps.sum(&:minutes)] }
     a_dull_month(date).merge!(practice_days.to_h)
   end
 
   def show_timer?
     new_record?
   end
-
 end

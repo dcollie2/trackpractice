@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 7.0.7'
+gem 'rails', '~> 7.1.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -28,8 +30,7 @@ gem 'jbuilder'
 
 gem 'pry'
 
-gem "chartkick"
-
+gem 'chartkick'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -49,13 +50,13 @@ gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'devise'
 gem 'dockerfile-rails', '>= 1.5', group: :development
-gem "hot_flash", "~> 1.1"
+gem 'hot_flash', '~> 1.1'
 gem 'popper_js'
 gem 'redis', '~> 5.0'
 gem 'sassc-rails'
-gem 'sentry-ruby', '~> 5.10'
-gem 'sentry-rails', '~> 5.10'
 gem 'sendgrid-ruby'
+gem 'sentry-rails', '~> 5.10'
+gem 'sentry-ruby', '~> 5.10'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem 'image_processing', '~> 1.2'

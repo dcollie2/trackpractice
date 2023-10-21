@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UsersHelper
   def practices_link(user)
     if current_user.admin? || user.make_practices_public?

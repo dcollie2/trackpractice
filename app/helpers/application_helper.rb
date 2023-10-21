@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
-  def practice_date(date, show_time=true)
+  def practice_date(date, show_time = true)
     if show_time
       date.to_fs(:long)
     else
       # date with no time in format january 1, 2021
-      date.strftime("%B %e, %Y")
+      date.strftime('%B %e, %Y')
     end
   end
 
   def minutes_in_words(span)
     span = 0 if span.blank?
-    if span == 0
+    if span.zero?
       '0'
     else
       distance_of_time_in_words(DateTime.current, DateTime.current + span.minutes)
@@ -24,14 +26,14 @@ module ApplicationHelper
   # 0 minutes => 0 minutes
   def hours_and_minutes_in_words(span)
     span = 0 if span.blank?
-    if span == 0
+    if span.zero?
       '0 minutes'
     else
       hours = span / 60
       minutes = span % 60
-      if hours > 0 && minutes > 0
-        "#{pluralize(hours, "hour")} #{pluralize(minutes, 'minute')}"
-      elsif hours > 0
+      if hours.positive? && minutes.positive?
+        "#{pluralize(hours, 'hour')} #{pluralize(minutes, 'minute')}"
+      elsif hours.positive?
         pluralize(hours, 'hour')
       else
         pluralize(minutes, 'minute')
@@ -41,9 +43,9 @@ module ApplicationHelper
 
   def active_state(controller)
     if params[:controller] == controller
-      "active"
+      'active'
     else
-      ""
+      ''
     end
   end
 
@@ -51,11 +53,11 @@ module ApplicationHelper
   # red if actual is less than a third of the target, yellow if actual is less than two thirds of the target
   def goal_background(target, actual)
     if actual >= target
-      "bg-success"
+      'bg-success'
     elsif actual <= target / 3
-      "bg-danger"
+      'bg-danger'
     else
-      "bg-warning"
+      'bg-warning'
     end
   end
 
@@ -66,7 +68,8 @@ module ApplicationHelper
   end
 
   def delete_button(item)
-    button_to icon_text('bi', 'trash3', "Delete #{item_class_name(item)}"), item, method: :delete, class: 'btn btn-sm btn-danger ml-5', data: { turbo_confirm: 'Are you sure?' }
+    button_to icon_text('bi', 'trash3', "Delete #{item_class_name(item)}"), item, method: :delete,
+                                                                                  class: 'btn btn-sm btn-danger ml-5', data: { turbo_confirm: 'Are you sure?' }
   end
 
   def item_class_name(item)
@@ -82,24 +85,22 @@ module ApplicationHelper
   end
 
   def display_field(item, field)
-    if item.send(field).blank?
-      return
-    else
-      content_tag :div do
-        concat content_tag :h2, field.to_s.titleize
-        concat content_tag :p, item.send(field)
-      end
+    return if item.send(field).blank?
+
+    content_tag :div do
+      concat content_tag :h2, field.to_s.titleize
+      concat content_tag :p, item.send(field)
     end
   end
 
   def flash_class(name)
     case name
-      when 'notice' then 'alert alert-info alert-dismissable fade show'
-      when 'success' then 'alert alert-success alert-dismissable fade show'
-      when 'error' then 'alert alert-danger alert-dismissable fade show'
-      when 'alert' then 'alert alert-danger alert-dismissable fade show'
-      else
-        'alert alert-primary alert-dismissable fade show'
+    when 'notice' then 'alert alert-info alert-dismissable fade show'
+    when 'success' then 'alert alert-success alert-dismissable fade show'
+    when 'error' then 'alert alert-danger alert-dismissable fade show'
+    when 'alert' then 'alert alert-danger alert-dismissable fade show'
+    else
+      'alert alert-primary alert-dismissable fade show'
     end
   end
 
@@ -111,7 +112,7 @@ module ApplicationHelper
   def render_flash
     return if @_flash_rendered
 
-    render partial: "shared/flash"
+    render partial: 'shared/flash'
   end
 
   def next_disabled(current_week)
