@@ -1,5 +1,7 @@
-require "test_helper"
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'test_helper'
+require 'application_system_test_case'
 
 class UsersTest < ApplicationSystemTestCase
   setup do
@@ -40,10 +42,10 @@ class UsersTest < ApplicationSystemTestCase
     assert_text 'User was successfully updated'
   end
 
-  test "non-admins who try to edit another user are told they cannot view that user" do
+  test 'non-admins who try to edit another user are told they cannot view that user' do
     sign_in @non_admin_user
     visit edit_user_url(@private_user)
-    assert_text "You cannot view that user"
+    assert_text 'You cannot view that user'
   end
 
   test "non-admins visiting the user list should be able to click on a public user's email and see their practices" do
@@ -54,17 +56,17 @@ class UsersTest < ApplicationSystemTestCase
     assert_text "Viewing #{@public_user.email}'s practices"
   end
 
-  test "admins can destroy users" do
+  test 'admins can destroy users' do
     sign_in @admin
     visit users_url
-    accept_alert "Are you sure?" do
-      click_on "Delete User", match: :first
+    accept_alert 'Are you sure?' do
+      click_on 'Delete User', match: :first
     end
 
-    assert_text "User was successfully destroyed"
+    assert_text 'User was successfully destroyed'
   end
 
-  test "users can update their own profile" do
+  test 'users can update their own profile' do
     sign_in @non_admin_user
 
     visit edit_user_path(@non_admin_user)
@@ -76,10 +78,9 @@ class UsersTest < ApplicationSystemTestCase
     assert_text 'User was successfully updated'
   end
 
-  test "non-admins do not see deletion button" do
+  test 'non-admins do not see deletion button' do
     sign_in @non_admin_user
     visit users_url
-    assert_no_text "Delete User"
+    assert_no_text 'Delete User'
   end
-
 end

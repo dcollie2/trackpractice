@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class StreakPartialTest < ActionView::TestCase
@@ -40,6 +42,4 @@ class StreakPartialTest < ActionView::TestCase
       # assert_select 'div.badge.bg-primary', text: "You're on a 3 day streak!"
     end
   end
-
-
 end

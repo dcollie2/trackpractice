@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PracticesController < ApplicationController
   before_action :set_focus_user, only: :index
-  before_action :set_practice, only: %i[ show edit update destroy ]
+  before_action :set_practice, only: %i[show edit update destroy]
   before_action :set_current_week, only: :index
   # before_action :set_focus_user, only: :index
   before_action :authenticate_user!
@@ -16,8 +18,7 @@ class PracticesController < ApplicationController
   end
 
   # GET /practices/1 or /practices/1.json
-  def show
-  end
+  def show; end
 
   # GET /practices/new
   def new
@@ -25,8 +26,7 @@ class PracticesController < ApplicationController
   end
 
   # GET /practices/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /practices or /practices.json
   def create
@@ -34,11 +34,14 @@ class PracticesController < ApplicationController
 
     respond_to do |format|
       if @practice.save
-        flash[:success] = "Practice was successfully created."
+        flash[:success] = 'Practice was successfully created.'
         format.html { redirect_to practices_url }
       else
         flash.now[:messages] = @practice.errors.full_messages[0]
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@practice, partial: "practices/form", locals: { practice: Practice.new } ) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(@practice, partial: 'practices/form',
+                                                               locals: { practice: Practice.new })
+        end
       end
     end
   end
@@ -47,12 +50,13 @@ class PracticesController < ApplicationController
   def update
     respond_to do |format|
       if @practice.update(practice_params)
-        flash[:notice] = "Practice was successfully updated."
+        flash[:notice] = 'Practice was successfully updated.'
         format.html { redirect_to practices_url, notice: 'Practice was successfully updated.' }
-        format.turbo_stream { render turbo_stream: [
-          turbo_stream.replace(@practice, partial: "practices/practice", locals: { practice: @practice })
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace(@practice, partial: 'practices/practice', locals: { practice: @practice })
           ]
-         }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -64,9 +68,11 @@ class PracticesController < ApplicationController
     @practice.destroy
 
     respond_to do |format|
-      flash[:notice] = "Practice was successfully destroyed."
+      flash[:notice] = 'Practice was successfully destroyed.'
       format.html { redirect_to practices_url, notice: 'Practice was successfully destroyed.' }
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@practice), notice: 'Practice was successfully destroyed.' }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(@practice), notice: 'Practice was successfully destroyed.'
+      end
     end
   end
 
@@ -77,9 +83,9 @@ class PracticesController < ApplicationController
       if current_user.admin?
         @focus_user = User.find(params[:user_id])
       else
-        @focus_user = User.with_public_practices#.where(id: params[:user_id])
+        @focus_user = User.with_public_practices # .where(id: params[:user_id])
         if @focus_user.blank?
-          flash[:alert] = "User not found."
+          flash[:alert] = 'User not found.'
           redirect_to practices_url(@current_user)
         else
           @focus_user = @focus_user.first
@@ -104,11 +110,11 @@ class PracticesController < ApplicationController
     # if params[:week] is not present or invalid, use the current week
     # if params[:week] is in the future, use the current week
     @current_week = Date.current.beginning_of_week
-    if params[:week]
-      begin
-        @current_week = Date.parse(params[:week]).beginning_of_week
-      rescue ArgumentError
-      end
+    return unless params[:week]
+
+    begin
+      @current_week = Date.parse(params[:week]).beginning_of_week
+    rescue ArgumentError
     end
   end
 end
