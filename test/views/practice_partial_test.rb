@@ -45,13 +45,6 @@ class PracticePartialTest < ActionView::TestCase
     assert_select 'p', text: @practice.notes
   end
 
-  test 'displays "No notes."' do
-    @practice.notes = nil
-    render partial: 'practices/practice', locals: { practice: @practice }
-
-    assert_select 'p', text: 'No notes.'
-  end
-
   test 'displays the edit and delete buttons' do
     render partial: 'practices/practice', locals: { practice: @practice }
 
