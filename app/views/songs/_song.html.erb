@@ -2,4 +2,6 @@
   <td><%= link_to song.title, song %></td>
   <td><%= minutes_in_words(song.practices.this_week_total) %></td>
   <td><%= minutes_in_words(song.total_practice_time) %></td>
+  <td><%= checkbox_icon(song.lyrics.present?) %></td>
+  <td><%= checkbox_icon(song.chords.present?) %></td>
 </tr>
