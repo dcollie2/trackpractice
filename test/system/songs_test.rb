@@ -9,9 +9,35 @@ class SongsTest < ApplicationSystemTestCase
     login_as @song.user
   end
 
-  test 'visiting the index' do
+  test 'index displays song and header' do
     visit songs_url
+
     assert_selector 'h1', text: 'Songs'
+    assert_text @song.title
+  end
+
+  test 'index does not display icons when lyrics and chords are missing' do
+    @song.update(lyrics: '', chords: '')
+
+    visit songs_url
+
+    assert_no_selector 'i.bi-check-circle-fill'
+  end
+
+  test 'index displays icons when lyrics are present' do
+    @song.update(lyrics: 'has lyrics', chords: '')
+
+    visit songs_url
+
+    assert_selector 'i.bi-check-circle-fill'
+  end
+
+  test 'index displays icons when chords are present' do
+    @song.update(lyrics: '', chords: 'has chords')
+
+    visit songs_url
+
+    assert_selector 'i.bi-check-circle-fill'
   end
 
   test 'should create song' do
