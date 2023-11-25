@@ -19,7 +19,7 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <%= form.label :practice_date, class: 'form-label' %>
-        <%= form.datetime_field :practice_date, class: 'form-control' %>
+        <%= form.datetime_field :practice_date, class: 'form-control', type: "datetime-local", value: Time.zone.now, include_seconds: false %>
       </div>
       <div class="col-md-6">
         <%= form.label :minutes, class: "form-label" %>
