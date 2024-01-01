@@ -64,6 +64,6 @@ class FociController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def focus_params
-    params.require(:focus).permit(:short_description, :user_id)
+    params.require(:focus).permit(:short_description, :user_id, :notes)
   end
 end

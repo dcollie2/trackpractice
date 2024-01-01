@@ -17,6 +17,11 @@
   </div>
 
   <div class='mb-3'>
+    <%= form.label :notes, class: "form-label" %>
+    <%= form.rich_text_area :notes, class: 'form-control' %>
+  </div>
+
+  <div class='mb-3'>
     User: <%= @focus.user.email %>
   </div>
 

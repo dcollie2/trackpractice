@@ -84,11 +84,12 @@ module ApplicationHelper
     "#{icon(type, name)} #{text}".html_safe
   end
 
-  def display_field(item, field)
+  def display_field(item, field, label = nil)
     return if item.send(field).blank?
+    label ||= field.to_s.titleize
 
     content_tag :div do
-      concat content_tag :h2, field.to_s.titleize
+      concat content_tag :h2, label.to_s.titleize
       concat content_tag :p, item.send(field)
     end
   end
