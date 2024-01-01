@@ -31,9 +31,9 @@
     <!-- Focus and song -->
     <div class="row mb-3">
       <% if current_user.foci.present? %>
-        <div class="col-md-6">
+        <div class="col-md-6" data-controller="focus">
           <%= form.label :focus_id, class: 'form-label' %>
-          <%= form.select :focus_id, current_user.foci.order(:short_description).map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, class: "form-control" %>
+          <%= form.select :focus_id, current_user.foci.order(:short_description).map { |t| [t.short_description, t.id]}, { include_blank: "Choose a focus for this practice if you wish" }, {class: "form-control", data: { action: 'change->focus#change'}} %>
         </div>
       <% end %>
       <% if current_user.songs.present? %>
@@ -58,6 +58,10 @@
     </div>
   </div>
 
+  <div class="mb-3 px-3">
+    <turbo-frame id="focusNotes">
+    </turbo-frame>
+  </div>
   <div class="mb-3 px-3">
     <turbo-frame id="lyrics">
     </turbo-frame>

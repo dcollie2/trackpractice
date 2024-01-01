@@ -2,8 +2,10 @@
 
 one:
   short_description: MyString
+  notes: <p>Focus notes</p>
   user: one
 
 two:
   short_description: MyString
+  notes: <p>Focus notes</p>
   user: two

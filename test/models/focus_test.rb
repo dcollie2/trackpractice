@@ -27,4 +27,12 @@ class FocusTest < ActiveSupport::TestCase
     practice.dup.save
     assert @focus.total_practice_time == 2, 'total_practice_time should be 2'
   end
+
+  test 'notes field is optional' do
+    @focus.notes = ''
+    assert @focus.save, 'Saved the focus without notes'
+
+    @focus.notes = 'This is a note'
+    assert @focus.save, 'Saved the focus with notes'
+  end
 end

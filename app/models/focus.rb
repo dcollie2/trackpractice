@@ -7,6 +7,8 @@ class Focus < ApplicationRecord
   belongs_to :user
   has_many :practices
 
+  has_rich_text :notes
+
   validates :short_description, presence: true
 
   # total practice time for this focus

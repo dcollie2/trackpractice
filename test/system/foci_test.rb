@@ -42,4 +42,18 @@ class FociTest < ApplicationSystemTestCase
 
     assert_text 'Focus was successfully destroyed'
   end
+
+  test 'edit form should include notes field' do
+    visit edit_focus_url(@focus)
+    assert_selector 'label', text: 'Notes'
+  end
+
+  test 'notes field should use rich text editor' do
+    @focus.notes = 'This is a note'
+    visit edit_focus_url(@focus)
+    assert_selector 'trix-editor', text: 'This is a note'
+    fill_in_rich_text_area 'Notes', with: 'This is a note'
+    click_on 'Update Focus'
+    assert_text 'Focus was successfully updated'
+  end
 end

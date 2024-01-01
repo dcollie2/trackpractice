@@ -1,0 +1,9 @@
+<%= turbo_stream.update "focusNotes" do %>
+  <% if @focus.notes.present? %>
+    <div class="row">
+      <%= render partial: 'foci/focus_notes', locals: { focus: @focus } %>
+    </div>
+  <% else %>
+    <p></p>
+  <% end %>
+<% end %>
