@@ -4,6 +4,10 @@ class Practice < ApplicationRecord
   belongs_to :user
   belongs_to :focus, optional: true
   belongs_to :song, optional: true
+  belongs_to :streak_began, class_name: 'Practice', optional: true
+
+  after_create :set_streak_beginning!
+
   validates :minutes, presence: true, numericality: { greater_than: 0 }
   validates :practice_date, presence: true # , timeliness: { type: :date }
   validates :user, presence: true
@@ -60,4 +64,27 @@ class Practice < ApplicationRecord
   def show_timer?
     new_record?
   end
+
+  def streak_length
+    return 0 unless streak_began
+
+    streak_start_date = streak_began.practice_date.to_date
+    (practice_date.to_date - streak_start_date).to_i + 1
+  end
+
+  def first_practice_yesterday
+    yesterday = practice_date.yesterday
+    user.practices.where(practice_date: yesterday.beginning_of_day..yesterday.end_of_day).order(:practice_date).first
+  end
+
+  def set_streak_beginning!
+    streak_began_id = if first_practice_yesterday.present? && first_practice_yesterday.streak_began_id.present?
+      first_practice_yesterday.streak_began_id
+    else
+      self.id
+    end
+    binding.pry unless streak_began_id.present?
+    self.update!(streak_began_id: streak_began_id)
+  end
+
 end

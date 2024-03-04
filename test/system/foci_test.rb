@@ -50,6 +50,7 @@ class FociTest < ApplicationSystemTestCase
 
   test 'notes field should use rich text editor' do
     @focus.notes = 'This is a note'
+    @focus.save
     visit edit_focus_url(@focus)
     assert_selector 'trix-editor', text: 'This is a note'
     fill_in_rich_text_area 'Notes', with: 'This is a note'
