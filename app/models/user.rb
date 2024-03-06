@@ -38,4 +38,14 @@ class User < ApplicationRecord
       most_recent_practice.streak_length
     end
   end
+
+  def streaks
+    streaks = {}
+    practices.order(:practice_date).includes(:streak_began).group_by(&:streak_began).each do |streak_began, practices|
+      streaks["#{streak_began.practice_date}"] = practices.last.streak_length if practices.last.streak_length > 3
+    end
+    streaks
+  end
+
+
 end
