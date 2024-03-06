@@ -1,4 +1,8 @@
 <h1><%= @user.email %></h1>
-<%= render @user %>
+<%# render @user %>
 
 <% link_to user_practices(@user) if @user != current_user %>
+<h2>Streaks</h2>
+<% @user.streaks.each do |streak| %>
+  <p><%= streak[1] %> Starting On <%= practice_date(streak[0].to_date, false) %></p>
+<% end %>
