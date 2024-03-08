@@ -30,6 +30,8 @@ gem 'jbuilder'
 
 gem 'pry'
 
+gem 'rack-brotli'
+
 gem 'chartkick'
 
 # Use Redis adapter to run Action Cable in production

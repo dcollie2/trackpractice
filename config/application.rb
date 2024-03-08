@@ -18,6 +18,9 @@ module Trackpractice
     config.active_support.cache_format_version = 7.0
     config.active_support.disable_to_s_conversion = true
 
+    config.middleware.use Rack::Deflater
+    config.middleware.use Rack::Brotli
+
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
