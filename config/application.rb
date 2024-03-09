@@ -14,9 +14,10 @@ module Trackpractice
     config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
-
     config.active_support.cache_format_version = 7.0
     config.active_support.disable_to_s_conversion = true
+    config.assets.js_compressor  = :terser
+    config.assets.css_compressor = :scss
 
     config.middleware.use Rack::Deflater
     config.middleware.use Rack::Brotli
