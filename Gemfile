@@ -31,6 +31,7 @@ gem 'jbuilder'
 gem 'pry'
 
 gem 'rack-brotli'
+gem 'terser'
 
 gem 'chartkick'
 
