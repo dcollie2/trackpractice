@@ -49,7 +49,7 @@ export default class extends Controller {
   initialTimerStart() {
     this.startTime = Date.now();
     this.startTimer();
-    this.minutesTarget.disabled = true;
+    // this.minutesTarget.disabled = true;
     this.startButtonTarget.classList.add("d-none");
     this.pauseButtonTarget.classList.remove("d-none");
     this.resumeButtonTarget.classList.add("d-none");
@@ -59,7 +59,7 @@ export default class extends Controller {
     clearInterval(this.int);
     this.paused = true;
     this.pauseTime = Date.now();
-    this.minutesTarget.disabled = false;
+    // this.minutesTarget.disabled = false;
     this.startButtonTarget.classList.add("d-none");
     this.pauseButtonTarget.classList.add("d-none");
     this.resumeButtonTarget.classList.remove("d-none");
@@ -85,5 +85,11 @@ export default class extends Controller {
     this.resumeButtonTarget.classList.add("d-none");
     this.displayTarget.innerHTML = "00 : 00 : 00 : 000 ";
     this.minutesTarget.value = 0;
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+    this.pauseTimer();
+    this.formFieldTarget.submit();
   }
 }

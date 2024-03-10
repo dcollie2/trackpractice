@@ -3,6 +3,12 @@
 
 <% link_to user_practices(@user) if @user != current_user %>
 <h2>Streaks</h2>
-<% @user.streaks.each do |streak| %>
-  <p><%= streak[1] %> Starting On <%= practice_date(streak[0].to_date, false) %></p>
+<% if @user.streaks %>
+  <% max_streak = @user.streaks.map { |s| s[1]}.max %>
+  <ul class='list-group'>
+  <% @user.streaks.each do |streak| %>
+    <% modifier_class = streak[1] == max_streak ? 'list-group-item-success' : 'list-group-item-light' %>
+    <li class='list-group-item <%= modifier_class %>'><%= pluralize(streak[1], "Day") %> Starting On <%= practice_date(streak[0].to_date, false) %></li>
+  <% end %>
+  </ul>
 <% end %>

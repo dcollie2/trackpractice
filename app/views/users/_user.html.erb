@@ -1,7 +1,7 @@
 <tr>
   <%# link the user's email to their show page if their practices are public or if current_user.admin? %>
   <%# otherwise, just display their email %>
-  <td><%= practices_link(user) %></td>
+  <td><%= link_to(user.email, userf) %></td>
   <td><%= user.practices.count %></td>
   <td><%= user.created_at %></td>
   <td><%= user.confirmed_at %></td>
