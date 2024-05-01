@@ -47,5 +47,19 @@ class User < ApplicationRecord
     streaks
   end
 
+  def longest_streak
+    # return the longest streak of days practiced without a break
+    if streaks.empty?
+      0
+    else
+      streaks.values.max
+    end
+  end
+
+  def approaching_streak?
+    # return true if the user is within 5 days of their longest streak
+    longest_streak - streak <= 5 && streak < longest_streak
+  end
+
 
 end
