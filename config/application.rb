@@ -28,5 +28,6 @@ module Trackpractice
     config.active_record.default_timezone = :utc
     config.time_zone = 'Central Time (US & Canada)'
     # config.eager_load_paths << Rails.root.join("extras")
+    config.add_autoload_paths_to_load_path = false
   end
 end
