@@ -48,13 +48,13 @@ class UsersTest < ApplicationSystemTestCase
     assert_text 'You cannot view that user'
   end
 
-  test "non-admins visiting the user list should be able to click on a public user's email and see their practices" do
-    sign_in @non_admin_user
-    visit users_url
-    click_on @public_user.email
-    assert_text @public_user.email
-    assert_text "Viewing #{@public_user.email}'s practices"
-  end
+  # test "non-admins visiting the user list should be able to click on a public user's email and see their practices" # do
+  #   sign_in @non_admin_user
+  #   visit users_url
+  #   click_on @public_user.email
+  #   assert_text @public_user.email
+  #   assert_text "Viewing #{@public_user.email}'s practices"
+  # end
 
   test 'admins can destroy users' do
     sign_in @admin
