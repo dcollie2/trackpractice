@@ -5,9 +5,9 @@ require 'application_system_test_case'
 
 class PracticesTest < ApplicationSystemTestCase
   setup do
-    @practice = practices(:one)
-    @practice.update(practice_date: DateTime.current)
-    login_as @practice.user
+    @user = create(:user)
+    @practice = create(:practice, user: @user, practice_date: DateTime.current)
+    login_as @user
   end
 
   test 'visiting the index' do

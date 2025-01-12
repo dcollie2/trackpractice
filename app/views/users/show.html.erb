@@ -1,7 +1,7 @@
 <h1><%= @user.email %></h1>
 <%# render @user %>
 
-<% link_to user_practices(@user) if @user != current_user %>
+<% link_to user_practices_path(@user) if @user != current_user %>
 <h2>Streaks</h2>
 <% if @user.streaks %>
   <% max_streak = @user.streaks.map { |s| s[1]}.max %>

@@ -69,7 +69,14 @@ class Practice < ApplicationRecord
     return 0 unless streak_began
 
     streak_start_date = streak_began.practice_date.to_date
-    (practice_date.to_date - streak_start_date).to_i + 1
+
+    return 0 if practice_date < 1.day.ago.to_date
+
+    potential_streak = (practice_date.to_date - streak_start_date).to_i + 1
+
+    return 0 if potential_streak < 3
+
+    potential_streak
   end
 
   def first_practice_yesterday

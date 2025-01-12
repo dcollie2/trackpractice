@@ -25,6 +25,8 @@ class User < ApplicationRecord
   end
 
   def most_recent_practice
+    return if practices.blank?
+
     practice = practices.order(practice_date: :desc).first
     practice_days_ago = (Time.zone.now.to_date - practice.practice_date.to_date).to_i
     practice_days_ago <= 2 ? practice : nil
