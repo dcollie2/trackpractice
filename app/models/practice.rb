@@ -70,7 +70,7 @@ class Practice < ApplicationRecord
 
     streak_start_date = streak_began.practice_date.to_date
 
-    return 0 if practice_date < 1.day.ago.to_date
+    # return 0 if practice_date < 1.day.ago.to_date
 
     potential_streak = (practice_date.to_date - streak_start_date).to_i + 1
 
