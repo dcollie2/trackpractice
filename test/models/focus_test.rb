@@ -21,9 +21,8 @@ class FocusTest < ActiveSupport::TestCase
   end
 
   test 'total practice time returns sum of minutes for all practices' do
-    practice = practices(:one)
-    practice.focus = @focus
-    practice.save
+    @user = create(:user)
+    practice = create(:practice, user: @user, focus: @focus, minutes: 1)
     practice.dup.save
     assert @focus.total_practice_time == 2, 'total_practice_time should be 2'
   end

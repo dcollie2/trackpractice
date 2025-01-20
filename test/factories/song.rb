@@ -1,0 +1,9 @@
+FactoryBot.define do
+  factory :song do
+    title { 'Title' }
+    lyrics { 'Lyrics' }
+    chords { 'Chords' }
+    shared { false }
+    user
+  end
+end

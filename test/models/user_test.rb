@@ -42,7 +42,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 0, @user.streak
   end
 
-  test 'streak returns 0 when the most recent practice is not today' do
+  test 'streak returns 0 when the most recent practice is not within two days' do
     create(:practice, practice_date: Time.zone.now - 4.days, user: @user)
     create(:practice, practice_date: Time.zone.now - 3.days, user: @user)
     create(:practice, practice_date: Time.zone.now - 2.days, user: @user)

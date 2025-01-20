@@ -36,6 +36,8 @@ class User < ApplicationRecord
     # return the count of days practiced without a break
     if most_recent_practice.nil?
       0
+    elsif most_recent_practice.practice_date < 2.days.ago
+      0
     else
       most_recent_practice.streak_length
     end

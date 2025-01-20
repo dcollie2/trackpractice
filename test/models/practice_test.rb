@@ -4,7 +4,7 @@ require 'test_helper'
 
 class PracticeTest < ActiveSupport::TestCase
   setup do
-    @user = users(:testy)
+    @user = create(:user)
   end
 
   # test "should not save without user" do
@@ -42,26 +42,26 @@ class PracticeTest < ActiveSupport::TestCase
   end
 
   test 'notes are optional' do
-    practice = practices(:one)
+    practice = build(:practice, user: @user)
     practice.notes = nil
     assert practice.save
   end
 
   test 'date is required' do
-    practice = practices(:one)
+    practice = build(:practice, user: @user)
     practice.practice_date = nil
     assert_not practice.save
   end
 
   test 'date must be a date' do
-    practice = practices(:one)
+    practice = build(:practice, user: @user)
     practice.practice_date = 'abc'
     assert_not practice.save
   end
 
   test 'in week returns practices from the first minute of the week to the last minute in the week' do
     beginning_of_week = (Date.today - 1.week).beginning_of_week
-    practice = practices(:one)
+    practice = build(:practice, user: @user)
     practice.update(practice_date: "#{beginning_of_week} 00:00:01")
     last_practice = practices(:two)
     last_practice.update(practice_date: "#{beginning_of_week.end_of_week} 23:23:59")
@@ -69,12 +69,12 @@ class PracticeTest < ActiveSupport::TestCase
   end
 
   test 'show_timer? is true if the record is new' do
-    test = Practice.new(user: @user)
+    test = build(:practice, user: @user)
     assert test.show_timer?
   end
 
   test 'show_timer? is false if record has been saved' do
-    test = Practice.new(user: @user, practice_date: DateTime.current, minutes: 1)
+    test = build(:practice, user: @user, practice_date: DateTime.current, minutes: 1)
     test.save!
     assert_not test.show_timer?
   end
