@@ -84,5 +84,6 @@ group :test do
   gem 'capybara'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver', '~> 4.4'
+  gem 'shoulda-matchers', '~> 6.0'
   gem 'simplecov', require: false
 end

@@ -3,5 +3,6 @@ FactoryBot.define do
     practice_date { Time.zone.now }
     minutes { 30 }
     notes { 'This is a note' }
+    user
   end
 end
