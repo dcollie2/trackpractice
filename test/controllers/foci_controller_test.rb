@@ -4,7 +4,7 @@ require 'test_helper'
 
 class FociControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @focus = foci(:one)
+    @focus = create(:focus)
     @user = @focus.user
   end
 

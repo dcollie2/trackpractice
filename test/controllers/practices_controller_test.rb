@@ -48,7 +48,7 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not set focus user if that user is not public' do
-    another_user = users(:another_user)
+    another_user = create(:user, make_practices_public: false)
     sign_in @user
     get practices_url, params: { user_id: another_user.id }
     assert_response :redirect

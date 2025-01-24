@@ -5,7 +5,7 @@ require 'application_system_test_case'
 
 class FociTest < ApplicationSystemTestCase
   setup do
-    @focus = foci(:one)
+    @focus = create(:focus)
     login_as @focus.user
   end
 

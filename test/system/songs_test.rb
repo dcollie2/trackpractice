@@ -5,7 +5,7 @@ require 'application_system_test_case'
 
 class SongsTest < ApplicationSystemTestCase
   setup do
-    @song = songs(:one)
+    @song = create(:song)
     login_as @song.user
   end
 

@@ -87,3 +87,7 @@ group :test do
   gem 'shoulda-matchers', '~> 6.0'
   gem 'simplecov', require: false
 end
+
+group :development, :test do
+  gem 'rubocop', require: false
+end

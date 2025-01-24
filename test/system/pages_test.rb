@@ -5,8 +5,9 @@ require 'application_system_test_case'
 
 class PagesTest < ApplicationSystemTestCase
   setup do
-    @page = pages(:one)
-    login_as users(:admin)
+    @page = create(:page)
+    @admin_user = create(:user, :admin)
+    login_as @admin_user
   end
 
   test 'visiting the index' do

@@ -4,7 +4,7 @@ require 'test_helper'
 
 class FocusTest < ActiveSupport::TestCase
   setup do
-    @focus = foci(:one)
+    @focus = create(:focus)
   end
 
   test 'should not save focus without short_description' do

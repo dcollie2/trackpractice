@@ -5,7 +5,7 @@ require 'test_helper'
 class SongTest < ActiveSupport::TestCase
   setup do
     @user = create(:user)
-    @song = songs(:one)
+    @song = create(:song, user: @user)
   end
   test 'should not save song without title' do
     @song.title = ''

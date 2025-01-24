@@ -9,8 +9,8 @@ class PracticePartialTest < ActionView::TestCase
   def setup
     @user = create(:user)
     @practice = create(:practice, user: @user)
-    @focus = foci(:one)
-    @song = songs(:one)
+    @focus = create(:focus, user: @user)
+    @song = create(:song, user: @user)
   end
 
   test 'displays the practice date' do

@@ -13,5 +13,8 @@ FactoryBot.define do
     trait :admin do
       admin { true }
     end
+    trait :public do
+      make_practices_public { true }
+    end
   end
 end
