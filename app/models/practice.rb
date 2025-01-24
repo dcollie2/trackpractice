@@ -14,7 +14,7 @@ class Practice < ApplicationRecord
   validates :notes, length: { maximum: 1000 }
 
   # TODO: are these getting used?
-  scope :this_week, -> { where(practice_date: 1.week.ago.beginning_of_day..Time.now.end_of_day) }
+  scope :this_week, -> { where(practice_date: 1.week.ago.beginning_of_day..Time.zone.now.end_of_day) }
 
   # given a date, return practices for that date's month and year
   scope :this_month, lambda { |date|
@@ -86,12 +86,10 @@ class Practice < ApplicationRecord
 
   def set_streak_beginning!
     streak_began_id = if first_practice_yesterday.present? && first_practice_yesterday.streak_began_id.present?
-      first_practice_yesterday.streak_began_id
-    else
-      self.id
-    end
-    binding.pry unless streak_began_id.present?
-    self.update!(streak_began_id: streak_began_id)
+                        first_practice_yesterday.streak_began_id
+                      else
+                        id
+                      end
+    update!(streak_began_id: streak_began_id)
   end
-
 end

@@ -5,7 +5,7 @@ class Focus < ApplicationRecord
                 'Performance', 'Recording Song', 'Learning Song'].freeze
 
   belongs_to :user
-  has_many :practices
+  has_many :practices, dependent: nil
 
   has_rich_text :notes
 

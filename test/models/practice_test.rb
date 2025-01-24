@@ -61,7 +61,7 @@ class PracticeTest < ActiveSupport::TestCase
 
   # methods
   test 'in week returns practices from the first minute of the week to the last minute in the week' do
-    beginning_of_week = (Date.today - 1.week).beginning_of_week
+    beginning_of_week = (Time.zone.today - 1.week).beginning_of_week
     create(:practice, practice_date: "#{beginning_of_week} 00:00:00")
     create(:practice, practice_date: "#{beginning_of_week} 23:23:59")
 

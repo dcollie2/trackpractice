@@ -8,9 +8,10 @@ class User < ApplicationRecord
          :trackable, :confirmable, :lockable
 
   has_many :practices, dependent: :destroy
-  has_many :foci, -> { order(short_description: :asc) }, dependent: :destroy
-  has_many :songs, -> { order(title: :asc) }, dependent: :destroy
+  has_many :foci, -> { order(short_description: :asc) }, dependent: :destroy, inverse_of: :user
+  has_many :songs, -> { order(title: :asc) }, dependent: :destroy, inverse_of: :user
 
+  validates :email, presence: true
   validates :time_zone, presence: true
 
   after_create :create_default_foci
@@ -46,7 +47,7 @@ class User < ApplicationRecord
   def streaks
     streaks = {}
     practices.order(:practice_date).includes(:streak_began).group_by(&:streak_began).each do |streak_began, practices|
-      streaks["#{streak_began.practice_date}"] = practices.last.streak_length if practices.last.streak_length > 3
+      streaks[streak_began.practice_date.to_s] = practices.last.streak_length if practices.last.streak_length > 3
     end
     streaks
   end
@@ -64,6 +65,4 @@ class User < ApplicationRecord
     # return true if the user is within 5 days of their longest streak
     longest_streak - streak <= 5 && streak < longest_streak
   end
-
-
 end

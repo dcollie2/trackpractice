@@ -290,6 +290,11 @@ GEM
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.37.0)
       parser (>= 3.3.1.0)
+    rubocop-rails (2.29.0)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.52.0, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
     ruby_http_client (3.5.5)
     rubyzip (2.4.1)
@@ -404,7 +409,7 @@ DEPENDENCIES
   rails (~> 8.0.1)
   rails-controller-testing
   redis (~> 5.0)
-  rubocop
+  rubocop-rails
   sassc-rails
   selenium-webdriver (~> 4.4)
   sendgrid-ruby

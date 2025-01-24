@@ -3,7 +3,11 @@
 Rails.application.routes.draw do
   resources :songs
   resources :foci
-  resources :pages
+  resources :pages do
+    member do
+      :home
+    end
+  end
   devise_for :users
   resources :users, except: %i[create new] do
     resources :practices, only: [:index]

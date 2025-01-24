@@ -81,11 +81,12 @@ module ApplicationHelper
   end
 
   def icon_text(type, name, text)
-    "#{icon(type, name)} #{text}".html_safe
+    "#{icon(type, name)} #{text}".html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def display_field(item, field, label = nil)
     return if item.send(field).blank?
+
     label ||= field.to_s.titleize
 
     content_tag :div do
@@ -111,7 +112,7 @@ module ApplicationHelper
   end
 
   def render_flash
-    return if @_flash_rendered
+    return if @_flash_rendered # rubocop:disable Rails/HelperInstanceVariable
 
     render partial: 'shared/flash'
   end

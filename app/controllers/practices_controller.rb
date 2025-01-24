@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PracticesController < ApplicationController
-  before_action :set_focus_user, only: :index
+  before_action :focus_user, only: :index
   before_action :set_practice, only: %i[show edit update destroy]
   before_action :set_current_week, only: :index
   # before_action :set_focus_user, only: :index
@@ -78,7 +78,7 @@ class PracticesController < ApplicationController
 
   private
 
-  def set_focus_user
+  def focus_user
     if params[:user_id]
       if current_user.admin?
         @focus_user = User.find(params[:user_id])
