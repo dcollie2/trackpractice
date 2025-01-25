@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users
   resources :songs
   resources :foci
   resources :pages do
@@ -8,7 +9,6 @@ Rails.application.routes.draw do
       :home
     end
   end
-  devise_for :users
   resources :users, except: %i[create new] do
     resources :practices, only: [:index]
   end

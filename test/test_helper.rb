@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+# Fix for devise route loading problems during testing
+# per https://github.com/heartcombo/devise/issues/5705#issuecomment-2442370072
+ActiveSupport.on_load(:action_mailer) do
+  Rails.application.reload_routes_unless_loaded
+end
+
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
