@@ -4,7 +4,7 @@ require 'test_helper'
 
 class SongsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @song = songs(:one)
+    @song = create(:song)
     @user = @song.user
     sign_in @user
   end

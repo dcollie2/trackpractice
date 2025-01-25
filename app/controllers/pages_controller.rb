@@ -9,6 +9,11 @@ class PagesController < ApplicationController
     @pages = Page.all
   end
 
+  def home
+    @page = Page.find_by(name: 'home')
+    render :show
+  end
+
   # GET /pages/1 or /pages/1.json
   def show; end
 

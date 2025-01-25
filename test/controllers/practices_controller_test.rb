@@ -4,8 +4,8 @@ require 'test_helper'
 
 class PracticesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @practice = practices(:one)
-    @user = users(:testy)
+    @user = create(:user)
+    @practice = create(:practice, user: @user)
   end
 
   test 'should get index' do
@@ -40,8 +40,7 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
   # end
 
   test 'should set focus user if that user is public' do
-    another_user = users(:another_user)
-    another_user.update!(make_practices_public: true)
+    another_user = create(:user, make_practices_public: true)
     sign_in @user
     get practices_url, params: { user_id: another_user.id }
     assert_response :success
@@ -49,7 +48,7 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not set focus user if that user is not public' do
-    another_user = users(:another_user)
+    another_user = create(:user, make_practices_public: false)
     sign_in @user
     get practices_url, params: { user_id: another_user.id }
     assert_response :redirect

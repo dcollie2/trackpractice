@@ -4,8 +4,8 @@ require 'test_helper'
 
 class PagesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @page = pages(:one)
-    @user = users(:testy)
+    @page = create(:page)
+    @user = create(:user)
   end
 
   test 'should get index' do

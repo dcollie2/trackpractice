@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   sequence :email do |n|
     "user#{n}@example.com"
@@ -12,6 +14,9 @@ FactoryBot.define do
     time_zone { 'UTC' }
     trait :admin do
       admin { true }
+    end
+    trait :public do
+      make_practices_public { true }
     end
   end
 end

@@ -48,7 +48,7 @@ class PracticesTest < ApplicationSystemTestCase
   end
 
   test "non-admins cannot see non-public users' practices" do
-    private_user = users(:private)
+    private_user = create(:user)
 
     visit user_practices_path(private_user)
 

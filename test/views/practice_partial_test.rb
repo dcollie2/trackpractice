@@ -7,9 +7,10 @@ class PracticePartialTest < ActionView::TestCase
   include ApplicationHelper
 
   def setup
-    @practice = practices(:one)
-    @focus = foci(:one)
-    @song = songs(:one)
+    @user = create(:user)
+    @practice = create(:practice, user: @user)
+    @focus = create(:focus, user: @user)
+    @song = create(:song, user: @user)
   end
 
   test 'displays the practice date' do
@@ -39,7 +40,7 @@ class PracticePartialTest < ActionView::TestCase
   end
 
   test 'displays the notes' do
-    @practice.notes = 'Some notes.'
+    @practice.update(notes: 'Some notes.')
     render partial: 'practices/practice', locals: { practice: @practice }
 
     assert_select 'p', text: @practice.notes

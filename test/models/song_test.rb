@@ -4,7 +4,8 @@ require 'test_helper'
 
 class SongTest < ActiveSupport::TestCase
   setup do
-    @song = songs(:one)
+    @user = create(:user)
+    @song = create(:song, user: @user)
   end
   test 'should not save song without title' do
     @song.title = ''
@@ -20,9 +21,7 @@ class SongTest < ActiveSupport::TestCase
   end
 
   test 'total practice time returns sum of minutes for all practices' do
-    practice = practices(:one)
-    practice.song = @song
-    practice.save
+    practice = create(:practice, user: @user, song: @song, minutes: 1)
     practice.dup.save
     assert @song.total_practice_time == 2, 'total_practice_time should be 2'
   end

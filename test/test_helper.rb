@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+# Fix for devise route loading problems during testing
+# per https://github.com/heartcombo/devise/issues/5705#issuecomment-2442370072
+ActiveSupport.on_load(:action_mailer) do
+  Rails.application.reload_routes_unless_loaded
+end
+
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
@@ -24,18 +30,25 @@ module ActiveSupport
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors)
 
-    #combine SimpleCov results to accurately get results from parallelized tests
+    # combine SimpleCov results to accurately get results from parallelized tests
     parallelize_setup do |worker|
       SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
     end
 
-    parallelize_teardown do |worker|
+    parallelize_teardown do |_worker|
       SimpleCov.result
     end
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-    fixtures :all
+    # fixtures :all
 
     # Add more helper methods to be used by all tests here...
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :minitest
+    with.library :rails
   end
 end

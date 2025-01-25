@@ -22,7 +22,7 @@ class UserTest < ActiveSupport::TestCase
   # TODO: write this test backwards to catch the failure
   test 'streak returns the correct streak count for consecutive practices' do
     create(:practice, practice_date: Time.zone.now - 2.days, user: @user)
-    create(:practice, practice_date: Time.zone.now - 1.days, user: @user)
+    create(:practice, practice_date: Time.zone.now - 1.day, user: @user)
     create(:practice, practice_date: Time.zone.now, user: @user)
     @user.reload
 
@@ -32,7 +32,7 @@ class UserTest < ActiveSupport::TestCase
   test 'streak returns the correct streak count with no practice today but a practice yesterday' do
     create(:practice, practice_date: Time.zone.now - 3.days, user: @user)
     create(:practice, practice_date: Time.zone.now - 2.days, user: @user)
-    create(:practice, practice_date: Time.zone.now - 1.days, user: @user)
+    create(:practice, practice_date: Time.zone.now - 1.day, user: @user)
     @user.reload
 
     assert_equal 3, @user.streak
@@ -42,7 +42,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 0, @user.streak
   end
 
-  test 'streak returns 0 when the most recent practice is not today' do
+  test 'streak returns 0 when the most recent practice is not within two days' do
     create(:practice, practice_date: Time.zone.now - 4.days, user: @user)
     create(:practice, practice_date: Time.zone.now - 3.days, user: @user)
     create(:practice, practice_date: Time.zone.now - 2.days, user: @user)
@@ -54,7 +54,7 @@ class UserTest < ActiveSupport::TestCase
   test 'streak 0 when there is a gap in the practices' do
     create(:practice, practice_date: Time.zone.now - 4.days, user: @user)
     create(:practice, practice_date: Time.zone.now - 2.days, user: @user)
-    create(:practice, practice_date: Time.zone.now - 1.days, user: @user)
+    create(:practice, practice_date: Time.zone.now - 1.day, user: @user)
     @user.reload
 
     assert_equal 0, @user.streak

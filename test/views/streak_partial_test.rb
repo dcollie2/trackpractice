@@ -7,15 +7,7 @@ class StreakPartialTest < ActionView::TestCase
   include ApplicationHelper
 
   def setup
-    @user = users(:one)
-    # @practice = practices(:one)
-    # @practice.update!(practice_date: DateTime.current)
-    # @practice_2 = practices(:one)
-    # @practice_2.update!(practice_date: @practice.practice_date - 1.day)
-    # @practice_3 = practices(:one)
-    # @practice_3.update!(practice_date: @practice.practice_date - 2.days)
-    # @practice_4 = practices(:one)
-    # @practice_4.update!(practice_date: @practice.practice_date - 3.days)
+    @user = create(:user)
   end
 
   # test 'displays the practice date' do
