@@ -44,11 +44,29 @@ class User < ApplicationRecord
     end
   end
 
+  def unique_practice_dates
+    practices.distinct.pluck(:practice_date).map(&:to_date)
+  end
+
   def streaks
     streaks = {}
-    practices.order(:practice_date).includes(:streak_began).group_by(&:streak_began).each do |streak_began, practices|
-      streaks[streak_began.practice_date.to_s] = practices.last.streak_length if practices.last.streak_length > 3
+    current_streak_start = nil
+    current_streak_length = 0
+
+    unique_practice_dates.sort.each_cons(2) do |date1, date2|
+      if date2 == date1 + 1.day
+        current_streak_start ||= date1
+        current_streak_length += 1
+      else
+        streaks[current_streak_start.to_s] = current_streak_length + 1 if current_streak_length >= 2
+        current_streak_start = nil
+        current_streak_length = 0
+      end
     end
+
+    # Handle the last streak
+    streaks[current_streak_start.to_s] = current_streak_length + 1 if current_streak_length >= 2
+
     streaks
   end
 
