@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def unique_practice_dates
-    practices.select(:practice_date).order(:practice_date).distinct.pluck(:practice_date).map(&:to_date)
+    practices.distinct.pluck(:practice_date).map(&:to_date)
   end
 
   def all_streaks
