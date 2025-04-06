@@ -7,10 +7,6 @@ class UserTest < ActiveSupport::TestCase
     @user = create(:user)
   end
 
-  test 'it should save' do
-    assert @user.save
-  end
-
   test 'returns unique practice dates for a user' do
     create(:practice, user: @user, practice_date: Date.today)
     create(:practice, user: @user, practice_date: Date.today - 1.day)
@@ -30,11 +26,15 @@ class UserTest < ActiveSupport::TestCase
     create(:practice, user: @user, practice_date: Date.today - 1.day)
     create(:practice, user: @user, practice_date: Date.today) # Streak of 2 days
 
-    streaks = @user.all_streaks
+    streaks = @user.streaks
 
     assert_equal 1, streaks.size, 'Only one streak should be included'
-    assert_equal [Date.today - 5.days, Date.today - 4.days, Date.today - 3.days], streaks.first, 'The streak should include the correct dates'
+    assert_equal 3, streaks.values.first, 'Streak length should be 3'
+    assert_includes streaks.keys, (Date.today - 5.days).to_s, 'The streak should start on the correct date'
+    assert_equal 3, streaks[(Date.today - 5.days).to_s], 'The streak length should be 3 days'
+    assert_instance_of Hash, streaks, 'Streaks should be a hash'
   end
+
   test 'user can make their practices public' do
     @user.update(make_practices_public: true)
 

@@ -48,31 +48,25 @@ class User < ApplicationRecord
     practices.distinct.pluck(:practice_date).map(&:to_date)
   end
 
-  def all_streaks
-    streaks = []
-    current_streak = []
+  def streaks
+    streaks = {}
+    current_streak_start = nil
+    current_streak_length = 0
 
     unique_practice_dates.sort.each_cons(2) do |date1, date2|
       if date2 == date1 + 1.day
-        current_streak << date1 unless current_streak.include?(date1)
-        current_streak << date2
+        current_streak_start ||= date1
+        current_streak_length += 1
       else
-        streaks << current_streak if current_streak.size >= 3
-        current_streak = []
+        streaks[current_streak_start.to_s] = current_streak_length + 1 if current_streak_length >= 2
+        current_streak_start = nil
+        current_streak_length = 0
       end
     end
 
-    # Add the last streak if it qualifies
-    streaks << current_streak if current_streak.size >= 3
+    # Handle the last streak
+    streaks[current_streak_start.to_s] = current_streak_length + 1 if current_streak_length >= 2
 
-    streaks
-  end
-
-  def streaks
-    streaks = {}
-    all_streaks.each do |streak|
-      streaks[streak.first.to_s] = streak.size
-    end
     streaks
   end
 
