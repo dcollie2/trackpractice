@@ -8,30 +8,30 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'returns unique practice dates for a user' do
-    create(:practice, user: @user, practice_date: Date.today)
-    create(:practice, user: @user, practice_date: Date.today - 1.day)
-    create(:practice, user: @user, practice_date: Date.today) # Duplicate date
+    create(:practice, user: @user, practice_date: Time.zone.today)
+    create(:practice, user: @user, practice_date: Time.zone.today - 1.day)
+    create(:practice, user: @user, practice_date: Time.zone.today) # Duplicate date
 
     unique_dates = @user.unique_practice_dates
     assert_equal 2, unique_dates.size
-    assert_includes unique_dates, Date.today
-    assert_includes unique_dates, Date.today - 1.day
+    assert_includes unique_dates, Time.zone.today
+    assert_includes unique_dates, Time.zone.today - 1.day
   end
 
   test 'returns streaks of three or more consecutive unique practice dates' do
-    create(:practice, user: @user, practice_date: Date.today - 5.days)
-    create(:practice, user: @user, practice_date: Date.today - 4.days)
-    create(:practice, user: @user, practice_date: Date.today - 3.days) # Streak of 3 days
+    create(:practice, user: @user, practice_date: Time.zone.today - 5.days)
+    create(:practice, user: @user, practice_date: Time.zone.today - 4.days)
+    create(:practice, user: @user, practice_date: Time.zone.today - 3.days) # Streak of 3 days
 
-    create(:practice, user: @user, practice_date: Date.today - 1.day)
-    create(:practice, user: @user, practice_date: Date.today) # Streak of 2 days
+    create(:practice, user: @user, practice_date: Time.zone.today - 1.day)
+    create(:practice, user: @user, practice_date: Time.zone.today) # Streak of 2 days
 
     streaks = @user.streaks
 
     assert_equal 1, streaks.size, 'Only one streak should be included'
     assert_equal 3, streaks.values.first, 'Streak length should be 3'
-    assert_includes streaks.keys, (Date.today - 5.days).to_s, 'The streak should start on the correct date'
-    assert_equal 3, streaks[(Date.today - 5.days).to_s], 'The streak length should be 3 days'
+    assert_includes streaks.keys, (Time.zone.today - 5.days).to_s, 'The streak should start on the correct date'
+    assert_equal 3, streaks[(Time.zone.today - 5.days).to_s], 'The streak length should be 3 days'
     assert_instance_of Hash, streaks, 'Streaks should be a hash'
   end
 
