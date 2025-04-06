@@ -11,6 +11,30 @@ class UserTest < ActiveSupport::TestCase
     assert @user.save
   end
 
+  test 'returns unique practice dates for a user' do
+    create(:practice, user: @user, practice_date: Date.today)
+    create(:practice, user: @user, practice_date: Date.today - 1.day)
+    create(:practice, user: @user, practice_date: Date.today) # Duplicate date
+
+    unique_dates = @user.unique_practice_dates
+    assert_equal 2, unique_dates.size
+    assert_includes unique_dates, Date.today
+    assert_includes unique_dates, Date.today - 1.day
+  end
+
+  test 'returns streaks of three or more consecutive unique practice dates' do
+    create(:practice, user: @user, practice_date: Date.today - 5.days)
+    create(:practice, user: @user, practice_date: Date.today - 4.days)
+    create(:practice, user: @user, practice_date: Date.today - 3.days) # Streak of 3 days
+
+    create(:practice, user: @user, practice_date: Date.today - 1.day)
+    create(:practice, user: @user, practice_date: Date.today) # Streak of 2 days
+
+    streaks = @user.all_streaks
+
+    assert_equal 1, streaks.size, 'Only one streak should be included'
+    assert_equal [Date.today - 5.days, Date.today - 4.days, Date.today - 3.days], streaks.first, 'The streak should include the correct dates'
+  end
   test 'user can make their practices public' do
     @user.update(make_practices_public: true)
 
