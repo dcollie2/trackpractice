@@ -29,7 +29,7 @@ class SongsController < ApplicationController
       if @song.save
         format.html { redirect_to song_url(@song), notice: 'Song was successfully created.' }
       else
-        format.html { redirect_to new_song_path, status: :unprocessable_entity }
+        format.html { redirect_to new_song_path, status: :unprocessable_content }
       end
     end
   end
@@ -41,7 +41,7 @@ class SongsController < ApplicationController
         format.html { redirect_to song_url(@song), notice: 'Song was successfully updated.' }
       else
         format.html do
-          redirect_to edit_song_path(@song), status: :unprocessable_entity, notice: 'Song was not successfully updated.'
+          redirect_to edit_song_path(@song), status: :unprocessable_content, notice: 'Song was not successfully updated.'
         end
       end
     end

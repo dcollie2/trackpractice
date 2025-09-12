@@ -35,7 +35,7 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
   #   post :create, params: { practice: { name: "" } }, xhr: true
 
   #   assert_equal "Could not create practice.", flash[:warning]
-  #   assert_response :unprocessable_entity
+  #   assert_response :unprocessable_content
   #   assert_match /<form class="new_practice" id="new_practice" action="\/practices" accept-charset="UTF-8" data-remote="true" method="post">/m, @response.body
   # end
 
