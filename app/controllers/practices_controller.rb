@@ -58,7 +58,7 @@ class PracticesController < ApplicationController
           ]
         end
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
       end
     end
   end

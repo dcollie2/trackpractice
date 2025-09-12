@@ -34,7 +34,7 @@ class SongsControllerTest < ActionDispatch::IntegrationTest
       post songs_url, params: { song: { title: '', artist: '' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should show song' do
@@ -56,7 +56,7 @@ class SongsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should fail to update song with invalid parameters' do
     patch song_url(@song), params: { song: { title: '', artist: '' } }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should destroy song' do
