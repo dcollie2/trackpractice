@@ -12,7 +12,6 @@ gem 'rails', '~> 8.0.1'
 gem 'sprockets-rails'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1' # TODO: remove after the one-time Postgres import on Fly
 gem 'sqlite3', '>= 2.1'
 
 # Use the Puma web server [https://github.com/puma/puma]

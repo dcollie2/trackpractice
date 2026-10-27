@@ -2,8 +2,8 @@
 # /rails/storage, so it survives deploys and is covered by volume snapshots.
 #
 # The production entry uses the `url:` key on purpose: Rails lets an explicit
-# url in database.yml win over ENV["DATABASE_URL"], which still points at the
-# old Postgres cluster until the one-time import is done.
+# url in database.yml win over ENV["DATABASE_URL"], so a stray DATABASE_URL
+# secret can never point production back at an external database.
 default: &default
   adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
