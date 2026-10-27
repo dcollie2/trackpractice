@@ -33,7 +33,7 @@ class PagesController < ApplicationController
       if @page.save
         format.html { redirect_to page_url(@page), notice: 'Page was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
       end
     end
   end
@@ -44,7 +44,7 @@ class PagesController < ApplicationController
       if @page.update(page_params)
         format.html { redirect_to page_url(@page), notice: 'Page was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
       end
     end
   end

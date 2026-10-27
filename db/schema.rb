@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_304_231_330) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
-
+ActiveRecord::Schema[8.0].define(version: 20_240_304_231_330) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -56,7 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 20_240_304_231_330) do
 
   create_table 'foci', force: :cascade do |t|
     t.string 'short_description'
-    t.bigint 'user_id', null: false
+    t.integer 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.text 'notes'
@@ -71,12 +67,12 @@ ActiveRecord::Schema[7.1].define(version: 20_240_304_231_330) do
   end
 
   create_table 'practices', force: :cascade do |t|
-    t.datetime 'practice_date', default: -> { 'CURRENT_TIMESTAMP' }
+    t.datetime 'practice_date'
     t.integer 'minutes', default: 0
     t.text 'notes'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.bigint 'user_id', null: false
+    t.integer 'user_id'
     t.integer 'focus_id'
     t.integer 'song_id'
     t.integer 'streak_began_id'
@@ -88,7 +84,7 @@ ActiveRecord::Schema[7.1].define(version: 20_240_304_231_330) do
     t.text 'lyrics'
     t.text 'chords'
     t.boolean 'shared'
-    t.bigint 'user_id', null: false
+    t.integer 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['user_id'], name: 'index_songs_on_user_id'

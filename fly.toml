@@ -9,13 +9,17 @@ console_command = "/rails/bin/rails console"
 
 [build]
 
-[deploy]
-  release_command = "./bin/rails db:prepare"
+# No release_command: Fly runs it on a throwaway machine without the volume,
+# so db:prepare happens in bin/docker-entrypoint on the real machine instead.
+
+[mounts]
+  source = "data"
+  destination = "/rails/storage"
 
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = "suspend"
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
@@ -26,4 +30,4 @@ console_command = "/rails/bin/rails console"
 
 [[vm]]
   size = "shared-cpu-1x"
-  memory = '1gb'
+  memory = "512mb"

@@ -12,10 +12,10 @@ gem 'rails', '~> 8.0.1'
 gem 'sprockets-rails'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
+gem 'sqlite3', '>= 2.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 6.0'
+gem 'puma', '~> 7.0'
 
 gem 'importmap-rails', '~> 2.0'
 
@@ -56,7 +56,6 @@ gem 'dockerfile-rails', '>= 1.5', group: :development
 gem 'hot_flash', '~> 1.1'
 gem 'ostruct'
 gem 'popper_js'
-gem 'redis', '~> 5.0'
 gem 'sassc-rails'
 gem 'sendgrid-ruby'
 gem 'sentry-rails', '~> 5.10'

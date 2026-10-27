@@ -36,7 +36,7 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential libpq-dev
+    apt-get install --no-install-recommends -y build-essential
 
 # Build options
 ENV PATH="/usr/local/node/bin:$PATH"
@@ -62,21 +62,25 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    apt-get install --no-install-recommends -y curl libjemalloc2 && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives && \
+    ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so.2
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-# Run and own only the runtime files as a non-root user for security
+# Create the non-root user. The container starts as root so that
+# bin/docker-entrypoint can take ownership of the Fly volume mounted at
+# /rails/storage, then it drops to this user before running Rails.
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
-USER rails:rails
 
 # Deployment options
 ENV RAILS_LOG_TO_STDOUT="1" \
-    RAILS_SERVE_STATIC_FILES="true"
+    RAILS_SERVE_STATIC_FILES="true" \
+    LD_PRELOAD="/usr/local/lib/libjemalloc.so.2" \
+    MALLOC_CONF="dirty_decay_ms:1000,narenas:2"
 
 # Entrypoint sets up the container.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]

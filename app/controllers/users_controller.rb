@@ -24,7 +24,7 @@ class UsersController < ApplicationController
         format.html { redirect_to users_url, notice: 'User was successfully updated.' }
         format.turbo_stream { redirect_to users_url, notice: 'User was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
       end
     end
   end

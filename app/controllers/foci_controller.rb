@@ -28,7 +28,7 @@ class FociController < ApplicationController
       if @focus.save
         format.html { redirect_to foci_url, notice: 'Focus was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
       end
     end
   end
@@ -39,7 +39,7 @@ class FociController < ApplicationController
       if @focus.update(focus_params)
         format.html { redirect_to foci_url, notice: 'Focus was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
       end
     end
   end
