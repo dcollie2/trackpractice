@@ -80,7 +80,7 @@ RUN useradd rails --create-home --shell /bin/bash && \
 ENV RAILS_LOG_TO_STDOUT="1" \
     RAILS_SERVE_STATIC_FILES="true" \
     LD_PRELOAD="/usr/local/lib/libjemalloc.so.2" \
-    MALLOC_CONF="dirty_decay_ms:1000,narenas:2,background_thread:true"
+    MALLOC_CONF="dirty_decay_ms:1000,narenas:2"
 
 # Entrypoint sets up the container.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
