@@ -1,5 +1,16 @@
 #!/bin/bash -e
 
-# Add any container initialization steps here
+# The Fly volume is mounted at /rails/storage as root. Take ownership for the
+# rails user, then drop privileges for everything that follows.
+if [ "$(id -u)" == "0" ]; then
+  chown -R rails:rails /rails/storage
+  exec setpriv --reuid=rails --regid=rails --init-groups "$0" "$@"
+fi
+
+# Prepare the SQLite database on the volume when starting the server.
+# This replaces Fly's release_command, which runs on a machine without the volume.
+if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+  ./bin/rails db:prepare
+fi
 
 exec "${@}"

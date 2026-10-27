@@ -69,10 +69,11 @@ RUN apt-get update -qq && \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-# Run and own only the runtime files as a non-root user for security
+# Create the non-root user. The container starts as root so that
+# bin/docker-entrypoint can take ownership of the Fly volume mounted at
+# /rails/storage, then it drops to this user before running Rails.
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
-USER rails:rails
 
 # Deployment options
 ENV RAILS_LOG_TO_STDOUT="1" \

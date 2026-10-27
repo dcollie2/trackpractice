@@ -9,8 +9,12 @@ console_command = "/rails/bin/rails console"
 
 [build]
 
-[deploy]
-  release_command = "./bin/rails db:prepare"
+# No release_command: Fly runs it on a throwaway machine without the volume,
+# so db:prepare happens in bin/docker-entrypoint on the real machine instead.
+
+[mounts]
+  source = "data"
+  destination = "/rails/storage"
 
 [http_service]
   internal_port = 3000
