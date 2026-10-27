@@ -63,7 +63,8 @@ FROM base
 # Install packages needed for deployment
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives && \
+    ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so.2
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
@@ -78,7 +79,7 @@ RUN useradd rails --create-home --shell /bin/bash && \
 # Deployment options
 ENV RAILS_LOG_TO_STDOUT="1" \
     RAILS_SERVE_STATIC_FILES="true" \
-    LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.2" \
+    LD_PRELOAD="/usr/local/lib/libjemalloc.so.2" \
     MALLOC_CONF="dirty_decay_ms:1000,narenas:2,background_thread:true"
 
 # Entrypoint sets up the container.
