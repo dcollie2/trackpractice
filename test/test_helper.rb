@@ -8,13 +8,13 @@ end
 
 require 'simplecov'
 SimpleCov.start 'rails' do
-  add_filter '/bin/'
-  add_filter '/db/'
-  add_filter '/test/'
-  add_filter '/vendor/'
-  add_filter '/channels/'
-  add_filter '/jobs/'
-  add_filter '/mailers/'
+  skip '/bin/'
+  skip '/db/'
+  skip '/test/'
+  skip '/vendor/'
+  skip '/channels/'
+  skip '/jobs/'
+  skip '/mailers/'
 end
 
 ENV['RAILS_ENV'] ||= 'test'

@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
   def turbo_native_app?
     # Detect Turbo Native (iOS/Android) shells via User-Agent, header, or opt-in param
     ua = request.user_agent.to_s
-    ua.include?("Turbo Native") ||
-      ua.include?("Hotwire Native") ||
-      request.headers["X-Turbo-Native"].present? ||
+    ua.include?('Turbo Native') ||
+      ua.include?('Hotwire Native') ||
+      request.headers['X-Turbo-Native'].present? ||
       params[:native].present?
   end
 end
