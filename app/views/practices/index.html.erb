@@ -47,12 +47,12 @@
 <div class="row mx-1 mt-3">
   <div class="card">
     <div class="card-header" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-      <h2>All of <%= @current_week.strftime('%B, %Y') %><h2>
+      <h2><%= @chart_end == Date.current ? 'Last 30 days' : "30 days to #{@chart_end.strftime('%B %-d, %Y')}" %></h2>
     </div>
 
     <div id="collapseOne" class="collapse open show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="card-body">
-        <%= area_chart Practice.month_of_practices(@current_week, @focus_user), ytitle: "Minutes" %>
+        <%= area_chart Practice.thirty_days_of_practices(@chart_end, @focus_user), ytitle: "Minutes" %>
       </div>
     </div>
   </div>

@@ -16,10 +16,10 @@ class Practice < ApplicationRecord
   # TODO: are these getting used?
   scope :this_week, -> { where(practice_date: 1.week.ago.beginning_of_day..Time.zone.now.end_of_day) }
 
-  # given a date, return practices for that date's month and year
-  scope :this_month, lambda { |date|
-                       where(practice_date: date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day)
-                     }
+  # given an end date, return practices for the 30 days ending on that date
+  scope :thirty_days_to, lambda { |end_date|
+                           where(practice_date: (end_date - 29.days).beginning_of_day..end_date.end_of_day)
+                         }
 
   # get total sum of minutes for this week
   scope :this_week_total, -> { this_week.sum(:minutes) }
@@ -40,21 +40,18 @@ class Practice < ApplicationRecord
     practice_date.in_time_zone(focus_user).strftime('%a, %d %b %Y')
   end
 
-  def self.a_dull_month(date)
-    # create a hash for each day of the date's month
-    # add each day as the key
-    # add 0 as the value
-    month_end = date.month == Time.zone.now.month ? Time.zone.now : date.end_of_month
-    (date.beginning_of_month..month_end).each_with_object({}) do |day, hash|
+  # a hash with a 0 for each of the 30 days ending on end_date
+  def self.a_dull_thirty_days(end_date)
+    ((end_date.to_date - 29.days)..end_date.to_date).each_with_object({}) do |day, hash|
       hash[day.strftime('%a, %d %b %Y')] = 0
     end
   end
 
-  def self.month_of_practices(date, focus_user)
-    practice_days = focus_user.practices.this_month(date).group_by do |practice|
+  def self.thirty_days_of_practices(end_date, focus_user)
+    practice_days = focus_user.practices.thirty_days_to(end_date).group_by do |practice|
                       practice.practice_day(focus_user.time_zone)
                     end.collect { |p, ps| [p, ps.sum(&:minutes)] }
-    a_dull_month(date).merge!(practice_days.to_h)
+    a_dull_thirty_days(end_date).merge!(practice_days.to_h)
   end
 
   def show_timer?

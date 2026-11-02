@@ -110,11 +110,13 @@ class PracticesController < ApplicationController
     # if params[:week] is not present or invalid, use the current week
     # if params[:week] is in the future, use the current week
     @current_week = Date.current.beginning_of_week
-    return unless params[:week]
-
-    begin
-      @current_week = Date.parse(params[:week]).beginning_of_week
-    rescue ArgumentError
+    if params[:week]
+      begin
+        @current_week = Date.parse(params[:week]).beginning_of_week
+      rescue ArgumentError
+      end
     end
+    # the 30-day chart ends with the last day of the displayed week, but never runs past today
+    @chart_end = [@current_week.end_of_week, Date.current].min
   end
 end

@@ -68,6 +68,22 @@ class PracticeTest < ActiveSupport::TestCase
     assert Practice.in_week(beginning_of_week).size == 2
   end
 
+  test 'thirty days of practices covers the 30 days ending on the given date, including that day' do
+    user = create(:user)
+    end_date = Time.zone.today
+    create(:practice, user: user, practice_date: "#{end_date} 12:00:00", minutes: 10)
+    create(:practice, user: user, practice_date: "#{end_date - 29.days} 00:00:00", minutes: 20)
+    create(:practice, user: user, practice_date: "#{end_date - 30.days} 23:59:59", minutes: 30)
+
+    days = Practice.thirty_days_of_practices(end_date, user)
+
+    assert_equal 30, days.size
+    assert_equal end_date.strftime('%a, %d %b %Y'), days.keys.last
+    assert_equal 10, days[end_date.strftime('%a, %d %b %Y')]
+    assert_equal 20, days[(end_date - 29.days).strftime('%a, %d %b %Y')]
+    assert_equal 30, days.values.sum # the practice 30 days back is excluded
+  end
+
   test 'show_timer? is true if the record is new' do
     test = build(:practice)
 
